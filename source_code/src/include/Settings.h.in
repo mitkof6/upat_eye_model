@@ -1,0 +1,8 @@
+#ifndef SETTINGS_H
+#define SETTINGS_H
+
+#include <string>
+
+std::string MODEL_DIR = "@MODEL_DIR@";
+
+#endif
