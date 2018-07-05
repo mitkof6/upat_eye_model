@@ -1,0 +1,262 @@
+\documentclass[11pt,a4paper,draft=false]{report}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{bm,txfonts}       % bm: bold for Greek letters, txfonts -> varmathbb
+\usepackage{breqn}              % automatically brake line in equations
+\usepackage{cancel}
+\usepackage{arydshln}         % matrix dash lines
+\usepackage{booktabs}         % tables
+\usepackage{color,soul}         % used for \hl{}
+\usepackage[inline]{enumitem}   % use to set labels in the enumerate environment
+\usepackage{fullpage}
+\usepackage[pdftex]{graphicx}
+\graphicspath{{./figures/}{./tikz/}}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+\usepackage{caption}
+\captionsetup{labelfont=bf}
+\usepackage[caption=false,labelfont=bf]{subfig}
+\usepackage{listings}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{url}
+\usepackage[pdfpagelabels,pdfusetitle,colorlinks=true,pdfborder={0 0
+  0}]{hyperref}
+\usepackage{natbib}
+\bibliographystyle{IEEEtranN}
+
+% indexing
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \usepackage{makeidx}
+% \makeindex
+
+% make use of \index{word} in text
+
+% acronyms
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[acronym]{glossaries}
+
+\newacronym{tscmc}{TSCMC}{Task Space Computed Muscle Control}
+\newacronym{cmc}{CMC}{Computed Muscle Control}
+\newacronym{dofs}{DoFs}{Degrees of Freedom}
+\newacronym{dof}{DoF}{Degree of Freedom}
+\newacronym{ik}{IK}{Inverse Kinematics}
+\newacronym{tsik}{TSIK}{Task Space Inverse Kinematics}
+\newacronym{rms}{RMS}{Root Mean Square}
+\newacronym{fd}{FD}{Forward Dynamics}
+\newacronym{id}{ID}{Inverse Dynamics}
+\newacronym{md}{MD}{Mixed Dynamics}
+\newacronym{jra}{JRA}{Joint Reaction Analysis}
+\newacronym{eoms}{EoMs}{Equations of Motion}
+\newacronym{emg}{EMG}{Electromyography}
+\newacronym{mocap}{MoCap}{Motion Capture}
+\newacronym{imu}{IMU}{Inertial Measurement Unit}
+\newacronym{itsc}{ITSC}{Inverse Task Space Controller}
+\newacronym{so}{SO}{Static Optimization}
+\newacronym{pd}{PD}{Proportional Derivative}
+\newacronym{dmc}{DMC}{Direct Marker Control}
+\newacronym{dae}{DAE}{Differential Algebraic Equations}
+\newacronym{rra}{RRA}{Residual Reduction Algorithm}
+\newacronym{ode}{ODE}{Ordinary Differential Equations}
+\newacronym{svd}{SVD}{Singular Value Decomposition}
+\newacronym{mpp}{MPP}{Moore-Penrose Pseudoinverse}
+\newacronym{cns}{CNS}{Central Nervous System}
+\newacronym{umh}{UMH}{Uncontrolled Manifold Hypothesis}
+\newacronym{ke}{KE}{Kinetic Energy}
+\newacronym{pe}{PE}{Potential Energy}
+\newacronym{rmse}{RMSE}{Root Mean Square Error}
+\newacronym{em}{EOMs}{Extraocular Muscles}
+\makeglossaries{}
+
+% custom commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\DeclareMathAlphabet\mathbfcal{OMS}{cmsy}{b}{n} % mathcal bf
+\newcommand{\ten}[1]{\mathbfcal{#1}}
+\newcommand{\mat}[1]{\bm{#1}}
+\renewcommand*{\vec}[1]{\bm{#1}}
+\newcommand{\pd}[2]{\frac{\partial#1}{\partial#2}}
+\newcommand{\subspace}[1]{\varmathbb{#1}}
+\newcommand{\rs}[1]{\subspace{R} (#1)}
+\newcommand{\cs}[1]{\subspace{C} (#1)}
+\newcommand{\ns}[1]{\subspace{N} (#1)}
+\newcommand{\fs}[1]{\subspace{F}}
+\newcommand{\ms}[1]{\subspace{M}}
+\newcommand{\R}[1]{\mathfrak{R}^{#1}}
+\newcommand{\inr}[1]{\in\R{#1}}
+\newcommand{\TP}[1]{\mat{T}_{#1}}     % tall projection
+\newcommand{\FP}[1]{\mat{F}_{#1}}     % fat projection
+\newcommand{\NT}[1]{\mat{N}_{\TP{#1}}}
+\newcommand{\N}[1]{\mat{N}_{#1}}
+\newcommand{\dNT}[1]{\mat{\dot{N}}_{\TP{#1}}}
+\newcommand{\NF}[1]{\mat{N}_{\FP{#1}}}
+\newcommand{\dNF}[1]{\mat{\dot{N}}_{\FP{#1}}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+
+% mathematical proofs
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{corollary}{Corollary}[chapter]
+\newcommand{\corollaryautorefname}{Corollary}
+\newtheorem{proposition}{Proposition}[chapter]
+\newcommand{\propositionautorefname}{Proposition}
+\newtheorem{remark}{Remark}[chapter]
+\newcommand{\remarkautorefname}{Remark}
+\newtheorem{definition}{Definition}[chapter]
+\newcommand{\definitionautorefname}{Definition}
+\newcommand{\subfigureautorefname}{Figure} % subfloat
+\renewcommand*{\figureautorefname}{Figure}
+\renewcommand*{\sectionautorefname}{Section}
+\renewcommand*{\subsectionautorefname}{Subsection}
+\newcommand{\algorithmautorefname}{Algorithm}
+\makeatletter
+\renewcommand\thealgorithm{\thechapter.\arabic{algorithm}}
+\@addtoreset{algorithm}{chapter}
+\makeatother
+\def\equationautorefname~#1\null{Equation #1\null}
+
+% \renewcommand{\baselinestretch}{1.5} % line stretch
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{An Open-Source OpenSim Oculomotor Model for Kinematic and Dynamic
+  Simulation}
+
+\author{Constantinos Filip, Dimitar Stanev\footnote{Electrical and Computer
+    Engineering Department, University of Patras, Greece, Corresponding author:
+    stanev@ece.upatras.gr} and Konstantinos Moustakas}
+
+\date{\today}
+
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+  bla
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Introduction}\label{sec:introduction}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Methods}\label{sec:methods}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Eye Globe}\label{sec:eye-globe}
+
+he orbital plant consists of the globe (eyeball), three pairs of extraocular
+muscles, and connective tissues. The size of an emmetropic human adult eye is
+approximately 24.2 mm (transverse, horizontal) x 23.7 mm (sagittal, vertical) x
+22.0–24.8 mm (axial, anteroposterior) with no significant difference between
+sexes and age groups. In the transverse diameter, the eyeball size may vary from
+21 mm to 27 mm. Thus, it can be approximated by a solid sphere with 12mm
+radius. The eyeball was constructed in Blender, an open-source software 3D
+creation Software. We used a spherical mesh with 32 segments and 12 rings, to
+construct the vitreous humor (body) as solid sphere and a conical plate to
+construct the cornea. The weight of an average human eye is 7.5grams and the
+moment of inertia can be calculated similarly as in the case of a spherical
+homogenous and isotropic object with radius 12mm ($\mat{I} = 2/5 m r^2$ at the
+center of mass).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Muscle Paths and Pulleys}\label{sec:muscle-modeling}
+
+\begin{table}[h]
+  \caption{TODO}\label{tab:muscle-path}
+  \begin{tabular}{@{}cccccccccc@{}}
+    \toprule
+    \textbf{Muscle} & \multicolumn{3}{c}{\textbf{Origin}}                                & \multicolumn{3}{c}{\textbf{Pulley}}                                & \multicolumn{3}{c}{\textbf{Insertion}}                                                                      \\ \midrule
+                    & \textit{\textbf{Ox}} & \textit{\textbf{Oy}} & \textit{\textbf{Oz}} & \textit{\textbf{Px}} & \textit{\textbf{Py}} & \textit{\textbf{Pz}} & \textit{\textbf{Ix}} & \multicolumn{1}{l}{\textit{\textbf{Iy}}} & \multicolumn{1}{l}{\textit{\textbf{Iz}}} \\ \midrule
+    LR              & -0.034               & 0.0006               & -0.013               & -0.0102              & 0.0003               & 0.012                & 0.0065               & \multicolumn{1}{l}{0}                    & \multicolumn{1}{l}{0.0101}               \\
+    MR              & -0.030               & 0.0006               & -0.017               & -0.0053              & 0.00014              & -0.0146              & 0.0088               & \multicolumn{1}{l}{0}                    & \multicolumn{1}{l}{-0.0096}              \\
+    SR              & -0.0317              & 0.0036               & -0.016               & -0.0092              & 0.012                & -0.002               & 0.0076               & 0.0104                                   & 0                                        \\
+    IR              & -0.0317              & -0.0024              & -0.016               & -0.0042              & -0.0128              & -0.0042              & 0.00805              & -0.0102                                  & 0                                        \\
+    SO              & 0.0082               & 0.0122               & -0.0152              & -0.030834            & 0.001145             & -0.01644             & 0.0044               & 0.011                                    & 0.0029                                   \\
+    IS              & 0.0113               & -0.0154              & -0.0111
+                    & -0.00718             & -0.0135              & 0
+                                                                                         &
+                                                                                           -0.008
+                                                                                                                & 0                                        & 0.009 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Passive Connective Tissues}\label{sec:passive-connective-tissues}
+
+The passive connective tissues of the eyeball apply a restoring force, which
+brings the globe back to the central position when the net force from the
+\gls{em} is zero. These tissues include all non-muscular suspensory tissues,
+such as Tenon’s capsule, the optic nerve, the fat pad and the conjunctiva. The
+force-displacement curve of the net elasticity can be represented as
+
+\begin{equation}\label{equ:passive-tissue}
+  \vec{f}_t = -k_p \vec{q} - k_c 10^{-3} \vec{q}^3 - k_d * \vec{\dot{q}}
+\end{equation}
+%
+where, $\vec{f}_t$ represents the passive tissue forces,
+$k_p= 0.33 \text{g / deg}$, $k_p= 1.56 \text{g / (deg^3)}$ (\hl{TODO: convert to
+  Nm / rad}) and
+$k_v= 10^{-4} \text{Nm s / rad}$ the constants and $\vec{\dot{q}} \inr{3}$ the
+rotational coordinates of the model. These forces serve the eye’s stabilization,
+and are modeled using \texttt{OpenSim}'s expression based coordinate force.
+% 0.33 * 9.8066500286389 * 10**-3 / (numpy.pi / 180) = 0.18542028707494282
+% 1.56 * 9.8066500286389 * 10**-3 / (numpy.pi / 180) ** 3 = 2877.4856893811248
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Model Validation}\label{sec:model-validation}
+
+To meet good fidelity criteria, a model requires to be verified and
+validated. In our study, verification in oculomotor models was performed by
+comparing the force-length characteristic curves of the modeled \gls{em} to
+published data. These data include only the lateral rectus characteristic
+curves. However, we can make a safe assumption that the other muscles have
+similar properties. More characteristic curves showing the force-length
+relationship of the other \gls{em}, as well as the changes in muscle length with
+rotation in all directions, are presented in the end of this report. Further
+verification can be done by comparing the model’s joint forces produced during
+horizontal movement with clinically collected data, but these data are not
+available.  Validation was performed by simulating and analyzing synthesized eye
+movements while ensuring that Listing Law was obeyed by maintaining zero torsion
+in secondary gaze positions, and by testing if the assessed innervations are
+sufficient in fixating the eye at a desired position.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Results}\label{sec:results}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \section*{Discussion}\label{sec:discussion}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Conclusion}\label{sec:conclusion}
+
+We manage to construct a complete ocular model that represents the ocular
+motility of a normal human eye. The model can be used to drive simulations of
+different eye movement systems and be derive some inference about the excitation
+and activation patterns. The verification and validation of the model showed
+that it matches the data found in literature and it is able to produce
+synthetized movements. We even showed that the simulation results produced by
+static optimization and forward dynamics in OpenSim are less satisfactory than
+the proposed solution where we used a PD controller to minimize the tracking
+error between the desired and estimated trajectory of saccadic movements. The
+desired kinematics were tracked within a maximum \gls{rmse} of and in horizontal
+and vertical saccades respectively. With the application of the controller, a
+very rapid instantaneous acceleration and a constant velocity to sustain clear
+vision is attained. The produced activation levels were in accordance with the
+descriptions found in the bibliography and the highest activation levels were
+shown only during the time intervals when the main agonist muscle was activated.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \bibliography{mylibrary}
+% \addcontentsline{toc}{chapter}{Bibliography}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

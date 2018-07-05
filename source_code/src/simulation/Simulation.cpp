@@ -1,10 +1,16 @@
 /**
  * @file Simulation.cpp
  *
- * \brief Simulation
+ * \brief Loads the baseline model, removes the linear tissue forces and adds
+ * and ExpressionBasedCoordinateForce. A custom FixationController is added to
+ * the model and a forward simulation is carried. All results are stored in the
+ * model/ folder.
  *
  * @author Constantinos Filip <filipconstantinos@gmail.com>
  *         Dimitar Stanev     <jimstanev@gmail.com>
+ *
+ * @see <a href="https://simtk.org/projects/eye">[SimTK Project]</a>, <a
+ * href="XXX">[Publication]</a>
  */
 #include <iostream>
 #include <OpenSim/OpenSim.h>
@@ -22,17 +28,19 @@ void addExpressionCoordinateForce(Model* model) {
     // remove other forces first
     model->updForceSet().remove(
         model->updForceSet().getIndex(
-        &model->updForceSet().get("add_adb_tissue"), 0));
+            &model->updForceSet().get("add_adb_tissue"), 0));
 
     model->updForceSet().remove(
         model->updForceSet().getIndex(
-        &model->updForceSet().get("sup_inf_tissue"), 0));
+            &model->updForceSet().get("sup_inf_tissue"), 0));
 
     model->updForceSet().remove(
         model->updForceSet().getIndex(
-        &model->updForceSet().get("inc_exc_tissue"), 0));
+            &model->updForceSet().get("inc_exc_tissue"), 0));
 
-    // add expression based coordinate forces (don't use spaces in the expression)
+    // Add expression based coordinate forces (don't use spaces in the
+    // expression). Linux users may experience problem with Lepton (v3.3), most
+    // recent versions may not have this problem.
     auto add_adb_tissue =
         new ExpressionBasedCoordinateForce("r_eye_add_abd",
                                            "-0.002225*q-0.0105*0.0001*q^3-0.001*qdot");
@@ -79,12 +87,12 @@ void simulateModel() {
     auto& state = model.initSystem();
     model.equilibrateMuscles(state);
     /*model.updCoordinateSet().get("r_eye_add_abd").setValue(state, 0.1);
-    model.updCoordinateSet().get("r_eye_sup_inf").setValue(state, 0.1);*/
+      model.updCoordinateSet().get("r_eye_sup_inf").setValue(state, 0.1);*/
 
     // Visualize model
     /*model.updMatterSubsystem().setShowDefaultGeometry(true);
-    model.updVisualizer().updSimbodyVisualizer().setBackgroundColor(Vec3(1));
-    model.updVisualizer().updSimbodyVisualizer().drawFrameNow(state);*/
+      model.updVisualizer().updSimbodyVisualizer().setBackgroundColor(Vec3(1));
+      model.updVisualizer().updSimbodyVisualizer().drawFrameNow(state);*/
 
     // Create the integrator and manager for the simulation
     RungeKuttaMersonIntegrator integrator(model.getMultibodySystem());

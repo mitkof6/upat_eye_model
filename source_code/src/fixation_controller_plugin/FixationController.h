@@ -1,11 +1,16 @@
 /**
-* @file FixationController.h
-*
-* \brief A
-*
-* @author Constantinos Filip <filipconstantinos@gmail.com>
-*         Dimitar Stanev     <jimstanev@gmail.com>
-*/
+ * @file FixationController.h
+ *
+ * \brief A fixation controller for the eye model. The controller accepts the
+ * horizontal and vertical target angle and computes the muscle excitation
+ * required to track the desired motion.
+ *
+ * @author Constantinos Filip <filipconstantinos@gmail.com>
+ *         Dimitar Stanev     <jimstanev@gmail.com>
+ *
+ * @see <a href="https://simtk.org/projects/eye">[SimTK Project]</a>, <a
+ * href="XXX">[Publication]</a>
+ */
 #ifndef FIXATION_CONTROLLER_H
 #define FIXATION_CONTROLLER_H
 
@@ -14,9 +19,7 @@
 
 namespace OpenSim {
     /**
-     * \brief A
-     *
-     *
+     * \brief Eye fixation controller.
      */
     class FixationController_API FixationController : public Controller {
         OpenSim_DECLARE_CONCRETE_OBJECT(FixationController, Controller);
@@ -31,11 +34,13 @@ namespace OpenSim {
         OpenSim_DECLARE_PROPERTY(kdT, double, "torsion velocity tracking gain");
         OpenSim_DECLARE_PROPERTY(saccade_onset, double, "saccade onset (s)");
         OpenSim_DECLARE_PROPERTY(saccade_velocity, double, "saccade velocity (in rad/s^2)");
-
+        /** Constructor. */
         FixationController();
+        /** Distractor. */
         ~FixationController() {};
+        /** Required to initialize controller properties. */
         void constructProperties();
-        // Controller::computeControls
+        /** Controller::computeControls. */
         void computeControls(const SimTK::State& s, SimTK::Vector& controls)
             const override;
     };

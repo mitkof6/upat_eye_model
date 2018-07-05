@@ -7,19 +7,19 @@ using namespace OpenSim;
 using namespace SimTK;
 
 /**
-* Implementation of smooth sigmoid function.
-*
-* Parameters
-* ----------
-* t : time to be evaluated
-* t0 : delay
-* A : magnitude
-* B : slope
-*
-* Returns
-* -------
-* (y, y', y'')
-*/
+ * Implementation of smooth sigmoid function.
+ *
+ * Parameters
+ * ----------
+ * t : time to be evaluated
+ * t0 : delay
+ * A : magnitude
+ * B : slope
+ *
+ * Returns
+ * -------
+ * (y, y', y'')
+ */
 Vec3 sigmoid(double t, double t0, double A, double B) {
     return Vec3(A * (tanh(B * (t - t0)) + 1) / 2,
                 A * B * (1 - pow(tanh(B * (t - t0)), 2)) / 2,
