@@ -10,9 +10,8 @@ set(target Simulation)
 add_executable(${target} ${sources} ${includes})
 target_link_libraries(${target} ${OpenSim_LIBRARIES} ${DEPENDENCY_LIBRARIES})
 
-set(ADDITIONAL_FILES
-	
-)
+# set(ADDITIONAL_FILES
+# )
 
 foreach(dataFile ${ADDITIONAL_FILES})
   file(COPY "${dataFile}" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")

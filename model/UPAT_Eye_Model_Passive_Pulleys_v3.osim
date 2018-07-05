@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <OpenSimDocument Version="30000">
 	<Model name="UPAT_Eye_Model_Passive_Pulleys_v3">
-		<credits>The model was created by Constantinos Filip as part of the course requirement in Modeling and Simulation (Biomedical Engineering, University of Patras) 2018. The mode is based on J. Iskander et al. 2018. The OpenSim controller plugin were prepared in collaboration with Dimitar Stanev. License: Creative Commons (CCBY 3.0). You are free to distribute, remix, tweak, and build upon this work, even commercially, as long as you credit us for the original creation (http://creativecommons.org/licenses/by/3.0/). SimTK project: https://simtk.org/projects/eye</credits>
+		<credits>The model was created by Constantinos Filip as part of the course requirement in Modeling and Simulation (Biomedical Engineering, University of Patras) 2018. The mode is based on J. Iskander et al. 2018. The OpenSim controller plugin were prepared in collaboration with Dimitar Stanev. License: Creative Commons (CCBY 4.0). You are free to distribute, remix, tweak, and build upon this work, even commercially, as long as you credit us for the original creation (http://creativecommons.org/licenses/by/4.0/). SimTK project: https://simtk.org/projects/eye</credits>
 		<publications>K. E. Filip, D. Stanev, and K. Moustakas (2018). An open-source OpenSim oculomotor model for kinematic and dynamic simulation. arXiv: XXX. Iskander, J., Hossny, M., Nahavandi, S., del Porto, L., Porto, L. (2018). An ocular biomechanic model for dynamic simulation of different eye movements. Journal of Biomechanics. https://doi.org/10.1016/j.jbiomech.2018.02.006.</publications>
 		<length_units>meters</length_units>
 		<force_units>N</force_units>
@@ -73,9 +73,9 @@
 				<Body name="r_eye">
 					<mass>0.0075</mass>
 					<mass_center> 0 0 0</mass_center>
-					<inertia_xx>4.32e-07</inertia_xx>
-					<inertia_yy>4.32e-07</inertia_yy>
-					<inertia_zz>4.32e-07</inertia_zz>
+					<inertia_xx>4.32e-007</inertia_xx>
+					<inertia_yy>4.32e-007</inertia_yy>
+					<inertia_zz>4.32e-007</inertia_zz>
 					<inertia_xy>0</inertia_xy>
 					<inertia_xz>0</inertia_xz>
 					<inertia_yz>0</inertia_yz>
@@ -329,9 +329,9 @@
 				<Body name="l_eye">
 					<mass>0.0075</mass>
 					<mass_center> 0 0 0</mass_center>
-					<inertia_xx>4.32e-07</inertia_xx>
-					<inertia_yy>4.32e-07</inertia_yy>
-					<inertia_zz>4.32e-07</inertia_zz>
+					<inertia_xx>4.32e-007</inertia_xx>
+					<inertia_yy>4.32e-007</inertia_yy>
+					<inertia_zz>4.32e-007</inertia_zz>
 					<inertia_xy>0</inertia_xy>
 					<inertia_xz>0</inertia_xz>
 					<inertia_yz>0</inertia_yz>
@@ -1430,42 +1430,24 @@
 						<curviness></curviness>
 					</TendonForceLengthCurve>
 				</Millard2012EquilibriumMuscle>
-				<SpringGeneralizedForce name="add_adb_tissue">
-					<!--Flag indicating whether the force is disabled or not. Disabled means that the force is not active in subsequent dynamics realizations.-->
-					<isDisabled>false</isDisabled>
-					<!--Name of the coordinate to which this force is applied.-->
+				<ExpressionBasedCoordinateForce name="add_adb_tissue">
+					<!--Coordinate (name) to apply force to.-->
 					<coordinate>r_eye_add_abd</coordinate>
-					<!--Spring stiffness.-->
-					<stiffness>0.002225</stiffness>
-					<!--Coordinate value at which spring produces no force.-->
-					<rest_length>0</rest_length>
-					<!--Damping constant.-->
-					<viscosity>0</viscosity>
-				</SpringGeneralizedForce>
-				<SpringGeneralizedForce name="sup_inf_tissue">
-					<!--Flag indicating whether the force is disabled or not. Disabled means that the force is not active in subsequent dynamics realizations.-->
-					<isDisabled>false</isDisabled>
-					<!--Name of the coordinate to which this force is applied.-->
+					<!--Expression of the force magnitude as a function of the coordinate value (q)and its time derivative (qdot). Note, expression cannot have any whitespaceseperating characters-->
+					<expression>-0.002225*q-0.0105*0.0001*q^3-0.001*qdot</expression>
+				</ExpressionBasedCoordinateForce>
+				<ExpressionBasedCoordinateForce name="sup_inf_tissue">
+					<!--Coordinate (name) to apply force to.-->
 					<coordinate>r_eye_sup_inf</coordinate>
-					<!--Spring stiffness.-->
-					<stiffness>0.002225</stiffness>
-					<!--Coordinate value at which spring produces no force.-->
-					<rest_length>0</rest_length>
-					<!--Damping constant.-->
-					<viscosity>0</viscosity>
-				</SpringGeneralizedForce>
-				<SpringGeneralizedForce name="inc_exc_tissue">
-					<!--Flag indicating whether the force is disabled or not. Disabled means that the force is not active in subsequent dynamics realizations.-->
-					<isDisabled>false</isDisabled>
-					<!--Name of the coordinate to which this force is applied.-->
+					<!--Expression of the force magnitude as a function of the coordinate value (q)and its time derivative (qdot). Note, expression cannot have any whitespaceseperating characters-->
+					<expression>-0.002225*q-0.0105*0.0001*q^3-0.001*qdot</expression>
+				</ExpressionBasedCoordinateForce>
+				<ExpressionBasedCoordinateForce name="inc_exc_tissue">
+					<!--Coordinate (name) to apply force to.-->
 					<coordinate>r_eye_inc_exc</coordinate>
-					<!--Spring stiffness.-->
-					<stiffness>0.002225</stiffness>
-					<!--Coordinate value at which spring produces no force.-->
-					<rest_length>0</rest_length>
-					<!--Damping constant.-->
-					<viscosity>0</viscosity>
-				</SpringGeneralizedForce>
+					<!--Expression of the force magnitude as a function of the coordinate value (q)and its time derivative (qdot). Note, expression cannot have any whitespaceseperating characters-->
+					<expression>-0.002225*q-0.0105*0.0001*q^3-0.001*qdot</expression>
+				</ExpressionBasedCoordinateForce>
 			</objects>
 		</ForceSet>
 		<!--Markers in the model.-->

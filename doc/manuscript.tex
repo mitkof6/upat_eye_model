@@ -15,8 +15,8 @@
 \captionsetup{labelfont=bf}
 \usepackage[caption=false,labelfont=bf]{subfig}
 \usepackage{listings}
-\usepackage{algorithm}
-\usepackage{algorithmic}
+% \usepackage{algorithm}
+% \usepackage{algorithmic}
 \usepackage{url}
 \usepackage[pdfpagelabels,pdfusetitle,colorlinks=true,pdfborder={0 0
   0}]{hyperref}
@@ -109,7 +109,7 @@
 \renewcommand*{\subsectionautorefname}{Subsection}
 \newcommand{\algorithmautorefname}{Algorithm}
 \makeatletter
-\renewcommand\thealgorithm{\thechapter.\arabic{algorithm}}
+% \renewcommand\thealgorithm{\thechapter.\arabic{algorithm}}
 \@addtoreset{algorithm}{chapter}
 \makeatother
 \def\equationautorefname~#1\null{Equation #1\null}
@@ -143,7 +143,7 @@
 \section*{Methods}\label{sec:methods}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection*{Eye Globe}\label{sec:eye-globe}
+\subsection*{Eye Modeling}\label{sec:eye-Modeling}
 
 he orbital plant consists of the globe (eyeball), three pairs of extraocular
 muscles, and connective tissues. The size of an emmetropic human adult eye is
@@ -160,7 +160,7 @@ homogenous and isotropic object with radius 12mm ($\mat{I} = 2/5 m r^2$ at the
 center of mass).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection*{Muscle Paths and Pulleys}\label{sec:muscle-modeling}
+\subsection*{Muscle Modeling}\label{sec:muscle-modeling}
 
 \begin{table}[h]
   \caption{TODO}\label{tab:muscle-path}
@@ -197,13 +197,16 @@ force-displacement curve of the net elasticity can be represented as
 \end{equation}
 %
 where, $\vec{f}_t$ represents the passive tissue forces,
-$k_p= 0.33 \text{g / deg}$, $k_p= 1.56 \text{g / (deg^3)}$ (\hl{TODO: convert to
-  Nm / rad}) and
-$k_v= 10^{-4} \text{Nm s / rad}$ the constants and $\vec{\dot{q}} \inr{3}$ the
+$k_p= 0.33 g / deg$ , $k_p= 1.56 g / (deg^3)$  (\hl{TODO: convert to
+	$Nm / rad$}) and
+$k_v= 10^{-4} Nm s / rad$ the constants and $\vec{\dot{q}} \inr{3}$ the
 rotational coordinates of the model. These forces serve the eye’s stabilization,
 and are modeled using \texttt{OpenSim}'s expression based coordinate force.
 % 0.33 * 9.8066500286389 * 10**-3 / (numpy.pi / 180) = 0.18542028707494282
 % 1.56 * 9.8066500286389 * 10**-3 / (numpy.pi / 180) ** 3 = 2877.4856893811248
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Results}\label{sec:results}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{Model Validation}\label{sec:model-validation}
@@ -224,7 +227,7 @@ in secondary gaze positions, and by testing if the assessed innervations are
 sufficient in fixating the eye at a desired position.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{Results}\label{sec:results}
+\subsection*{Fixation Controller}\label{sec:fixation-controller}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \section*{Discussion}\label{sec:discussion}
