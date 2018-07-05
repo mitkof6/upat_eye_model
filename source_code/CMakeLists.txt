@@ -68,8 +68,8 @@ mark_as_advanced(CMAKE_MINSIZEREL_POSTFIX)
 # configure project global settings that are include in the source
 set(MODEL_DIR "${PROJECT_SOURCE_DIR}/../model/")
 configure_file(
-"${PROJECT_SOURCE_DIR}/src/include/Settings.h.in"
-"${PROJECT_SOURCE_DIR}/src/include/Settings.h")
+  "${PROJECT_SOURCE_DIR}/src/include/Settings.h.in"
+  "${PROJECT_SOURCE_DIR}/src/include/Settings.h")
 set(CMAKE_EXTRA_INCLUDE_FILES)
 
 ################################################################################
@@ -85,7 +85,11 @@ set(CMAKE_EXTRA_INCLUDE_FILES)
 # endif()
 
 # configure for old version of OpenSim (v3.3)
-set(NameSpace "OpenSim_" CACHE string "Prefix of OpenSim namespace")
+if(${CMAKE_HOST_SYSTEM_NAME} MATCHES Windows)
+  set(NameSpace "OpenSim_" CACHE string "Prefix of OpenSim namespace")
+else()
+  set(NameSpace "" CACHE string "Prefix of OpenSim namespace")
+endif()
 set(OPENSIM_HOME $ENV{OPENSIM_HOME} CACHE PATH
   "Top-level directory of OpenSim install dir")
 set(OpenSim_INCLUDE_DIRS ${OPENSIM_HOME}/sdk/include)

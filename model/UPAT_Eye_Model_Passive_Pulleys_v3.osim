@@ -73,9 +73,9 @@
 				<Body name="r_eye">
 					<mass>0.0075</mass>
 					<mass_center> 0 0 0</mass_center>
-					<inertia_xx>4.32e-007</inertia_xx>
-					<inertia_yy>4.32e-007</inertia_yy>
-					<inertia_zz>4.32e-007</inertia_zz>
+					<inertia_xx>4.32e-07</inertia_xx>
+					<inertia_yy>4.32e-07</inertia_yy>
+					<inertia_zz>4.32e-07</inertia_zz>
 					<inertia_xy>0</inertia_xy>
 					<inertia_xz>0</inertia_xz>
 					<inertia_yz>0</inertia_yz>
@@ -329,9 +329,9 @@
 				<Body name="l_eye">
 					<mass>0.0075</mass>
 					<mass_center> 0 0 0</mass_center>
-					<inertia_xx>4.32e-007</inertia_xx>
-					<inertia_yy>4.32e-007</inertia_yy>
-					<inertia_zz>4.32e-007</inertia_zz>
+					<inertia_xx>4.32e-07</inertia_xx>
+					<inertia_yy>4.32e-07</inertia_yy>
+					<inertia_zz>4.32e-07</inertia_zz>
 					<inertia_xy>0</inertia_xy>
 					<inertia_xz>0</inertia_xz>
 					<inertia_yz>0</inertia_yz>
@@ -1430,24 +1430,42 @@
 						<curviness></curviness>
 					</TendonForceLengthCurve>
 				</Millard2012EquilibriumMuscle>
-				<ExpressionBasedCoordinateForce name="add_adb_tissue">
-					<!--Coordinate (name) to apply force to.-->
+				<SpringGeneralizedForce name="add_adb_tissue">
+					<!--Flag indicating whether the force is disabled or not. Disabled means that the force is not active in subsequent dynamics realizations.-->
+					<isDisabled>false</isDisabled>
+					<!--Name of the coordinate to which this force is applied.-->
 					<coordinate>r_eye_add_abd</coordinate>
-					<!--Expression of the force magnitude as a function of the coordinate value (q)and its time derivative (qdot). Note, expression cannot have any whitespaceseperating characters-->
-					<expression>-0.002225*q-0.0105*0.0001*q^3-0.001*qdot</expression>
-				</ExpressionBasedCoordinateForce>
-				<ExpressionBasedCoordinateForce name="sup_inf_tissue">
-					<!--Coordinate (name) to apply force to.-->
+					<!--Spring stiffness.-->
+					<stiffness>0.002225</stiffness>
+					<!--Coordinate value at which spring produces no force.-->
+					<rest_length>0</rest_length>
+					<!--Damping constant.-->
+					<viscosity>0</viscosity>
+				</SpringGeneralizedForce>
+				<SpringGeneralizedForce name="sup_inf_tissue">
+					<!--Flag indicating whether the force is disabled or not. Disabled means that the force is not active in subsequent dynamics realizations.-->
+					<isDisabled>false</isDisabled>
+					<!--Name of the coordinate to which this force is applied.-->
 					<coordinate>r_eye_sup_inf</coordinate>
-					<!--Expression of the force magnitude as a function of the coordinate value (q)and its time derivative (qdot). Note, expression cannot have any whitespaceseperating characters-->
-					<expression>-0.002225*q-0.0105*0.0001*q^3-0.001*qdot</expression>
-				</ExpressionBasedCoordinateForce>
-				<ExpressionBasedCoordinateForce name="inc_exc_tissue">
-					<!--Coordinate (name) to apply force to.-->
+					<!--Spring stiffness.-->
+					<stiffness>0.002225</stiffness>
+					<!--Coordinate value at which spring produces no force.-->
+					<rest_length>0</rest_length>
+					<!--Damping constant.-->
+					<viscosity>0</viscosity>
+				</SpringGeneralizedForce>
+				<SpringGeneralizedForce name="inc_exc_tissue">
+					<!--Flag indicating whether the force is disabled or not. Disabled means that the force is not active in subsequent dynamics realizations.-->
+					<isDisabled>false</isDisabled>
+					<!--Name of the coordinate to which this force is applied.-->
 					<coordinate>r_eye_inc_exc</coordinate>
-					<!--Expression of the force magnitude as a function of the coordinate value (q)and its time derivative (qdot). Note, expression cannot have any whitespaceseperating characters-->
-					<expression>-0.002225*q-0.0105*0.0001*q^3-0.001*qdot</expression>
-				</ExpressionBasedCoordinateForce>
+					<!--Spring stiffness.-->
+					<stiffness>0.002225</stiffness>
+					<!--Coordinate value at which spring produces no force.-->
+					<rest_length>0</rest_length>
+					<!--Damping constant.-->
+					<viscosity>0</viscosity>
+				</SpringGeneralizedForce>
 			</objects>
 		</ForceSet>
 		<!--Markers in the model.-->
