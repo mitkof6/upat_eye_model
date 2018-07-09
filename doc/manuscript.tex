@@ -24,7 +24,7 @@
 \bibliographystyle{IEEEtranN}
 
 % indexing
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
 % \usepackage{makeidx}
 % \makeindex
@@ -32,7 +32,7 @@
 % make use of \index{word} in text
 
 % acronyms
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
 \usepackage[acronym]{glossaries}
 
@@ -69,7 +69,7 @@
 \makeglossaries{}
 
 % custom commands
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
 \DeclareMathAlphabet\mathbfcal{OMS}{cmsy}{b}{n} % mathcal bf
 \newcommand{\ten}[1]{\mathbfcal{#1}}
@@ -116,7 +116,7 @@
 
 % \renewcommand{\baselinestretch}{1.5} % line stretch
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \title{An Open-Source OpenSim Oculomotor Model for Kinematic and Dynamic
   Simulation}
 
@@ -127,63 +127,65 @@
 \date{\today}
 
 \begin{document}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
 \maketitle
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \begin{abstract}
   bla
 \end{abstract}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \section*{Introduction}\label{sec:introduction}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \section*{Methods}\label{sec:methods}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \subsection*{Eye Modeling}\label{sec:eye-Modeling}
 
-he orbital plant consists of the globe (eyeball), three pairs of extraocular
+The orbital plant consists of the globe (eyeball), three pairs of extraocular
 muscles, and connective tissues. The size of an emmetropic human adult eye is
-approximately 24.2 mm (transverse, horizontal) x 23.7 mm (sagittal, vertical) x
+approximately 24.2 mm (transverse, horizontal), 23.7 mm (sagittal, vertical),
 22.0–24.8 mm (axial, anteroposterior) with no significant difference between
 sexes and age groups. In the transverse diameter, the eyeball size may vary from
-21 mm to 27 mm. Thus, it can be approximated by a solid sphere with 12mm
+21 mm to 27 mm. Thus, it can be approximated by a solid sphere with 12 mm
 radius. The eyeball was constructed in Blender, an open-source software 3D
 creation Software. We used a spherical mesh with 32 segments and 12 rings, to
 construct the vitreous humor (body) as solid sphere and a conical plate to
-construct the cornea. The weight of an average human eye is 7.5grams and the
+construct the cornea. The weight of an average human eye is 7.5 g and the
 moment of inertia can be calculated similarly as in the case of a spherical
-homogenous and isotropic object with radius 12mm ($\mat{I} = 2/5 m r^2$ at the
+homogenous and isotropic object with radius 12 mm ($\mat{I} = 2/5 m r^2$ at the
 center of mass).
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \subsection*{Muscle Modeling}\label{sec:muscle-modeling}
 
 \begin{table}[h]
   \caption{TODO}\label{tab:muscle-path}
   \begin{tabular}{@{}cccccccccc@{}}
     \toprule
-    \textbf{Muscle} & \multicolumn{3}{c}{\textbf{Origin}}                                & \multicolumn{3}{c}{\textbf{Pulley}}                                & \multicolumn{3}{c}{\textbf{Insertion}}                                                                      \\ \midrule
-                    & \textit{\textbf{Ox}} & \textit{\textbf{Oy}} & \textit{\textbf{Oz}} & \textit{\textbf{Px}} & \textit{\textbf{Py}} & \textit{\textbf{Pz}} & \textit{\textbf{Ix}} & \multicolumn{1}{l}{\textit{\textbf{Iy}}} & \multicolumn{1}{l}{\textit{\textbf{Iz}}} \\ \midrule
-    LR              & -0.034               & 0.0006               & -0.013               & -0.0102              & 0.0003               & 0.012                & 0.0065               & \multicolumn{1}{l}{0}                    & \multicolumn{1}{l}{0.0101}               \\
-    MR              & -0.030               & 0.0006               & -0.017               & -0.0053              & 0.00014              & -0.0146              & 0.0088               & \multicolumn{1}{l}{0}                    & \multicolumn{1}{l}{-0.0096}              \\
-    SR              & -0.0317              & 0.0036               & -0.016               & -0.0092              & 0.012                & -0.002               & 0.0076               & 0.0104                                   & 0                                        \\
-    IR              & -0.0317              & -0.0024              & -0.016               & -0.0042              & -0.0128              & -0.0042              & 0.00805              & -0.0102                                  & 0                                        \\
-    SO              & 0.0082               & 0.0122               & -0.0152              & -0.030834            & 0.001145             & -0.01644             & 0.0044               & 0.011                                    & 0.0029                                   \\
-    IS              & 0.0113               & -0.0154              & -0.0111
-                    & -0.00718             & -0.0135              & 0
-                                                                                         &
-                                                                                           -0.008
-                                                                                                                & 0                                        & 0.009 \\
+    \textbf{Muscle}
+    & \multicolumn{3}{c}{\textbf{Origin}}
+    & \multicolumn{3}{c}{\textbf{Pulley}}
+    & \multicolumn{3}{c}{\textbf{Insertion}}
+    \\ \midrule
+    & \textit{\textbf{Ox}} & \textit{\textbf{Oy}} & \textit{\textbf{Oz}}
+    & \textit{\textbf{Px}} & \textit{\textbf{Py}} & \textit{\textbf{Pz}}
+    & \textit{\textbf{Ix}} & \textit{\textbf{Iy}} & \textit{\textbf{Iz}}
+    \\ \midrule
+    LR & -0.034 & 0.0006 & -0.013 & -0.0102 & 0.0003 & 0.012 & 0.0065 & 0 & 0.0101 \\
+    MR & -0.030 & 0.0006 & -0.017 & -0.0053 & 0.00014 & -0.0146 & 0.0088 & 0 & -0.0096 \\
+    SR & -0.0317 & 0.0036 & -0.016 & -0.0092 & 0.012 & -0.002 & 0.0076 & 0.0104 & 0 \\
+    IR & -0.0317 & -0.0024 & -0.016 & -0.0042 & -0.0128 & -0.0042 & 0.00805 & -0.0102 & 0 \\
+    SO & 0.0082 & 0.0122 & -0.0152 & -0.030834 & 0.001145 & -0.01644 & 0.0044 & 0.011 & 0.0029 \\
+    IS & 0.0113 & -0.0154 & -0.0111 & -0.00718 & -0.0135 & 0 & -0.008 & 0 & 0.009 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \subsection*{Passive Connective Tissues}\label{sec:passive-connective-tissues}
 
 The passive connective tissues of the eyeball apply a restoring force, which
@@ -195,20 +197,19 @@ force-displacement curve of the net elasticity can be represented as
 \begin{equation}\label{equ:passive-tissue}
   \vec{f}_t = -k_p \vec{q} - k_c 10^{-3} \vec{q}^3 - k_d * \vec{\dot{q}}
 \end{equation}
-%
-where, $\vec{f}_t$ represents the passive tissue forces,
-$k_p= 0.33 g / deg$ , $k_p= 1.56 g / (deg^3)$  (\hl{TODO: convert to
-	$Nm / rad$}) and
-$k_v= 10^{-4} Nm s / rad$ the constants and $\vec{\dot{q}} \inr{3}$ the
-rotational coordinates of the model. These forces serve the eye’s stabilization,
-and are modeled using \texttt{OpenSim}'s expression based coordinate force.
+% 
+where, $\vec{f}_t$ represents the passive tissue forces, $k_p= 0.33$ g / deg,
+$k_p= 1.56$ g / (deg^3) (\hl{TODO:convert to $Nm / rad$}) and $k_v= 10^{-4}$ Nm
+s / rad the constants and $\vec{\dot{q}} \inr{3}$ the rotational coordinates of
+the model. These forces serve the eye’s stabilization, and are modeled using
+\texttt{OpenSim}'s expression based coordinate force.
 % 0.33 * 9.8066500286389 * 10**-3 / (numpy.pi / 180) = 0.18542028707494282
 % 1.56 * 9.8066500286389 * 10**-3 / (numpy.pi / 180) ** 3 = 2877.4856893811248
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \section*{Results}\label{sec:results}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \subsection*{Model Validation}\label{sec:model-validation}
 
 To meet good fidelity criteria, a model requires to be verified and
@@ -226,13 +227,13 @@ movements while ensuring that Listing Law was obeyed by maintaining zero torsion
 in secondary gaze positions, and by testing if the assessed innervations are
 sufficient in fixating the eye at a desired position.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \subsection*{Fixation Controller}\label{sec:fixation-controller}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 % \section*{Discussion}\label{sec:discussion}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \section*{Conclusion}\label{sec:conclusion}
 
 We manage to construct a complete ocular model that represents the ocular
@@ -251,12 +252,12 @@ vision is attained. The produced activation levels were in accordance with the
 descriptions found in the bibliography and the highest activation levels were
 shown only during the time intervals when the main agonist muscle was activated.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 % \bibliography{mylibrary}
 % \addcontentsline{toc}{chapter}{Bibliography}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \end{document}
 
 %%% Local Variables:
