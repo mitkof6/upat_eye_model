@@ -2,7 +2,7 @@
 <OpenSimDocument Version="30000">
 	<Model name="UPAT_Eye_Model_Passive_Pulleys_v1">
 		<credits>The model was created by Constantinos Filip as part of the course requirement in Modeling and Simulation (Biomedical Engineering, University of Patras) 2018. The mode is based on J. Iskander et al. 2018. The OpenSim controller plugin were prepared in collaboration with Dimitar Stanev. License: Creative Commons (CCBY 4.0). You are free to distribute, remix, tweak, and build upon this work, even commercially, as long as you credit us for the original creation (http://creativecommons.org/licenses/by/4.0/). SimTK project: https://simtk.org/projects/</credits>
-		<publications>K. E. Filip, D. Stanev, and K. Moustakas (2018). An open-source OpenSim oculomotor model for kinematic and dynamic simulation. arXiv: XXX. Iskander, J., Hossny, M., Nahavandi, S., del Porto, L., Porto, L. (2018). An ocular biomechanic model for dynamic simulation of different eye movements. Journal of Biomechanics. https://doi.org/10.1016/j.jbiomech.2018.02.006.</publications>
+		<publications>K. Filip, D. Stanev, and K. Moustakas (2018). An Open-Source OpenSim Oculomotor Model for Kinematics and Dynamics Simulation. arXiv: XXX. Iskander, J., Hossny, M., Nahavandi, S., del Porto, L., Porto, L. (2018). An ocular biomechanic model for dynamic simulation of different eye movements. Journal of Biomechanics. https://doi.org/10.1016/j.jbiomech.2018.02.006.</publications>
 		<length_units>meters</length_units>
 		<force_units>N</force_units>
 		<!--Acceleration due to gravity.-->
