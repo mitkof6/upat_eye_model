@@ -1499,8 +1499,8 @@
 					<kdT>0.5</kdT>
 					<!--saccade onset (s)-->
 					<saccade_onset>0.5</saccade_onset>
-					<!--saccade velocity (in rad/s^2)-->
-					<saccade_velocity>200</saccade_velocity>
+					<!--desired saccade velocity (deg / s)-->
+					<saccade_velocity>100</saccade_velocity>
 				</FixationController>
 			</objects>
 			<groups />

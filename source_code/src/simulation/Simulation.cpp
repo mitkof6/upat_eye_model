@@ -63,7 +63,6 @@ void addExpressionCoordinateForce(Model* model) {
 void simulateModel() {
     Model model(MODEL_DIR + "UPAT_Eye_Model_Passive_Pulleys_v2.osim");
     model.setName("UPAT_Eye_Model_Passive_Pulleys_v3");
-    // model.setUseVisualizer(true);
 
     // Add expression based coordinate force
     addExpressionCoordinateForce(&model);
@@ -80,21 +79,14 @@ void simulateModel() {
     controller->set_kpT(100);
     controller->set_kdT(0.5);
     controller->set_saccade_onset(0.5);
-    controller->set_saccade_velocity(200);
+    controller->set_saccade_velocity(100); // deg / s
     model.addController(controller);
 
     // Build and initialize model
     auto& state = model.initSystem();
     model.equilibrateMuscles(state);
-    /*model.updCoordinateSet().get("r_eye_add_abd").setValue(state, 0.1);
-      model.updCoordinateSet().get("r_eye_sup_inf").setValue(state, 0.1);*/
 
-      // Visualize model
-      /*model.updMatterSubsystem().setShowDefaultGeometry(true);
-        model.updVisualizer().updSimbodyVisualizer().setBackgroundColor(Vec3(1));
-        model.updVisualizer().updSimbodyVisualizer().drawFrameNow(state);*/
-
-        // Create the integrator and manager for the simulation
+    // Create the integrator and manager for the simulation
     RungeKuttaMersonIntegrator integrator(model.getMultibodySystem());
     Manager manager(model, integrator);
 

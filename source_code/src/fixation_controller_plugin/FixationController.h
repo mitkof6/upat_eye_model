@@ -33,7 +33,7 @@ namespace OpenSim {
         OpenSim_DECLARE_PROPERTY(kpT, double, "torsion position tracking gain");
         OpenSim_DECLARE_PROPERTY(kdT, double, "torsion velocity tracking gain");
         OpenSim_DECLARE_PROPERTY(saccade_onset, double, "saccade onset (s)");
-        OpenSim_DECLARE_PROPERTY(saccade_velocity, double, "saccade velocity (in rad/s^2)");
+        OpenSim_DECLARE_PROPERTY(saccade_velocity, double, "desired saccade velocity (deg / s)");
         /** Constructor. */
         FixationController();
         /** Distractor. */

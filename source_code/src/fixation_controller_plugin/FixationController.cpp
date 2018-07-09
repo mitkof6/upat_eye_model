@@ -22,8 +22,9 @@ using namespace SimTK;
  */
 Vec3 sigmoid(double t, double t0, double A, double B) {
     return Vec3(A * (tanh(B * (t - t0)) + 1) / 2,
-                A * B * (1 - pow(tanh(B * (t - t0)), 2)) / 2,
-                A * pow(B, 2) * tanh(B * (t - t0)) * (1 - pow(tanh(B * (t - t0)), 2)));
+                -(A * B * (pow(tanh(B * (t - t0)), 2) - 1)) / 2,
+                A * pow(B, 2) * tanh(B * (t - t0)) * (pow(tanh(B * (t - t0)), 2) - 1)
+    );
 }
 
 FixationController::FixationController() : Controller() {
@@ -39,8 +40,8 @@ void FixationController::constructProperties() {
     constructProperty_kdV(1.5);
     constructProperty_kpT(100);
     constructProperty_kdT(0.5);
-    constructProperty_saccade_onset(0);
-    constructProperty_saccade_velocity(200);
+    constructProperty_saccade_onset(0.5);
+    constructProperty_saccade_velocity(100);
 }
 
 void FixationController::computeControls(const State& s, Vector& controls) const {
@@ -60,20 +61,23 @@ void FixationController::computeControls(const State& s, Vector& controls) const
     const auto& inf_oblq = _model->getMuscles().get("r_Inferior_Oblique");
 
     // Compute the desired position, velocity and acceleration
+    auto thetaH = convertDegreesToRadians(get_thetaH());
+    auto thetaV = convertDegreesToRadians(get_thetaV());
+    auto desSaccadeVelocity = convertDegreesToRadians(get_saccade_velocity());
     double xdes = 0;
     double xdesv = 0;
     double xdesa = 0;
     auto sigmY = sigmoid(t,
                          get_saccade_onset(),
-                         convertDegreesToRadians(get_thetaH()),
-                         get_saccade_velocity());
+                         thetaH,
+                         2 * desSaccadeVelocity / abs(thetaH));
     double ydes = 0 + sigmY[0];
     double ydesv = sigmY[1];
     double ydesa = sigmY[2];
     auto sigmZ = sigmoid(t,
                          get_saccade_onset(),
-                         convertDegreesToRadians(get_thetaV()),
-                         get_saccade_velocity());
+                         thetaV,
+                         2 * desSaccadeVelocity / abs(thetaV));
     double zdes = 0 + sigmZ[0];
     double zdesv = sigmZ[1];
     double zdesa = sigmZ[2];
