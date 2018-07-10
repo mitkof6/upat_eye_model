@@ -121,11 +121,11 @@
 \section*{Introduction}\label{sec:introduction}
 
 Rapid and accurate eye movements are crucial for coordinated direction of
-gaze. Studying human eye movement has significant implications for improving our
-understanding of the oculomotor system and treating visuomotor disorders. Over
-the past decades, biomechanics simulation has provided the means to analyze
-different human movements. The same principles can be used to analyze visual
-tasks by modeling the musculoskeletal properties of the oculomotor
+gaze~\cite{Lee2006}. Studying human eye movement has significant implications
+for improving our understanding of the oculomotor system and treating visuomotor
+disorders. Over the past decades, biomechanics simulation has provided the means
+to analyze different human movements. The same principles can be used to analyze
+visual tasks by modeling the musculoskeletal properties of the oculomotor
 system. Consequently, this model can be used to investigate muscle activation
 patterns during static fixation, analyze the dynamics of various eye movements,
 calculate metabolic costs and simulate different eye disorders, such as
@@ -135,12 +135,13 @@ vestibular and oculomotor systems.
 
 Eye movements are a generated from a coordination of the six \gls{em}. Clinical
 trials have provided a profound knowledge of how the \gls{em} act on the eye
-globe, the resistive tension of the surrounding tissues and the length-tension
-relationship of the muscles. Various computational models of the extraocular
-muscles and orbital mechanics have been proposed, which provide insight and
-scientific bases for oculomotor biomechanics, control of eye movement and
-binocular misalignment. These models focus on the realism of muscle behavior and
-they were based on the viscoelastic properties and physiological data \gls{em}.
+globe~\cite{Robinson1969a}, the resistive tension of the surrounding tissues and
+the length-tension relationship of the muscles~\cite{Collins1981}. Various
+computational models of the extraocular muscles and orbital mechanics have been
+proposed, which provide insight and scientific bases for oculomotor
+biomechanics, control of eye movement and binocular misalignment. These models
+focus on the realism of muscle behavior and they were based on the viscoelastic
+properties and physiological data \gls{em}.
 
 The first 3D biomechanical model was developed by~\cite{Robinson1964a,
   Robinson1969}, who simplified the formulation by considering the elasticity of
@@ -150,7 +151,8 @@ relationships. To study the neural control of rapid saccadic movements, models
 using anatomical and mechanical properties of \gls{em} have been developed by
 accounting for the nonlinear muscle dynamics~\cite{Thelen2003a,
   Millard2013}. Such models, having the advantage of supporting dynamics
-simulation, are used in conjunction with brain level controllers \hl{seb}.
+simulation, are used in conjunction with brain level
+controllers~\cite{James2018}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \section*{Methods}\label{sec:methods}
@@ -324,8 +326,8 @@ force-displacement curve of the net elasticity can be represented as
 where, $\vec{f}_t$ represents the passive tissue forces, $k_p= 0.002225$ N m /
 rad, $k_c= 34.5297$ N m / (rad\textsuperscript{3}) and $k_v= 0.002$ N m s / rad
 the constants and $\vec{\dot{q}} \inr{3}$ the rotational coordinates of the
-model. These forces serve the eye’s stabilization, and are modeled using
-\texttt{OpenSim}'s expression based coordinate force.
+model~\cite{Collins1981}. These forces serve the eye’s stabilization, and are
+modeled using \texttt{OpenSim}'s expression based coordinate force.
 
 % 0.33 * 9.8066500286389 * 10**-3 / (numpy.pi / 180) = 0.18542028707494282 * 0.012
 % 1.56 * 9.8066500286389 * 10**-3 / (numpy.pi / 180) ** 3 = 2877.4856893811248 * 0.012
@@ -397,13 +399,14 @@ activations that generate a desired saccade, using a closed-loop fixation
 controller in a \gls{fd} manner. There is of course space for further
 improvement, which will enhance the accuracy and the predictability of the
 proposed computational eye model. In this study, we didn't attempt to model the
-muscle pulleys, which vary as a function of the model coordinates. Furthermore,
-the users should consider validation of the eye model based on the requirements
-of the targeted utility of the model and the variables of interests.
+muscle pulleys~\cite{Kono2002a}, which vary as a function of the model
+coordinates. Furthermore, the users should consider validation of the eye model
+based on the requirements of the targeted utility of the model and the variables
+of interests.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
-\bibliography*{mylibrary}
+\bibliography{mylibrary}
 \addcontentsline{toc}{chapter}{Bibliography}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
