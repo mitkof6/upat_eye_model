@@ -338,8 +338,8 @@ model. These forces serve the eye’s stabilization, and are modeled using
 
 A fixation controller was implemented as a custom \texttt{OpenSim} plugin. The
 parameters of the controller are: the desired horizontal $\theta_H$ and vertical
-$\theta_V$ fixation angles (in degrees), the saccade onset and velocity and the
-gains of \gls{pd} tracking controller ($k_p$ and $k_d $). A sigmoid function is
+$\theta_V$ fixation angles (in degrees), the saccade onset and velocity, and the
+gains of \gls{pd} tracking controller ($k_p$, $k_d $). A sigmoid function is
 used for generating smooth saccade trajectories
 
 \begin{equation}\label{equ:sigmoid}
@@ -358,12 +358,12 @@ defined as follows $a = \theta_g$, $b = 2 \dot{\theta}_g / \theta_g$. The
 
 \begin{equation}\label{equ:pd-controller}
   \ddot{\theta}(t) = k_p (\theta_d(t) - \theta(t)) + k_d (\dot{\theta}_d(t) -
-  \dot{\theta}(t)) 
+  \dot{\theta}(t)).
 \end{equation}
 
 The sign and magnitude of $\ddot{\theta}(t)$ both for the horizontal and
 vertical coordinates of the fixation target is used to actuate the corresponding
-muscle in order to achieve the desired goal. \autoref{fig:model} presents an
+muscles in order to achieve the desired goal. \autoref{fig:model} presents an
 instance of the model during simulation with the corresponding muscles
 activated. \autoref{fig:simulated-saccade} depicts the simulated coordinates,
 speeds and estimated \gls{em} activations that reproduce the desired saccade
@@ -396,14 +396,14 @@ kinematics and dynamics analysis or as a tool for obtaining the muscle
 activations that generate a desired saccade, using a closed-loop fixation
 controller in a \gls{fd} manner. There is of course space for further
 improvement, which will enhance the accuracy and the predictability of the
-proposed computational knee model. In this study, we didn't attempt to model the
-muscle pulleys, which vary as a function of the model coordinates. Finally, the
-users should consider validation of the eye model based on the requirements of
-the targeted utility of the model and the variables of interests.
+proposed computational eye model. In this study, we didn't attempt to model the
+muscle pulleys, which vary as a function of the model coordinates. Furthermore,
+the users should consider validation of the eye model based on the requirements
+of the targeted utility of the model and the variables of interests.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
-\bibliography{mylibrary}
+\bibliography*{mylibrary}
 \addcontentsline{toc}{chapter}{Bibliography}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
