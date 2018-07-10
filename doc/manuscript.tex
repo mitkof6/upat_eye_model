@@ -98,23 +98,23 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \begin{abstract}
-  Studying human eye movement has significant implications for improving our
+  Studying human eye movements has significant implications for improving our
   understanding of the oculomotor system and treating various visuomotor
   disorders. An open-source musculoskeletal model of the human eye, that can be
   used for kinematics and dynamics analysis, is implemented based on the data
   reported in literature and made publicly available\footnote{SimTK project:
     \url{https://simtk.org/projects/eye}}. The model is implemented in
-  \texttt{OpenSim}~\cite{Delp2007}, which is an open-source framework for
-  modeling and simulation of musculoskeletal systems. The calibration of the
-  model parameters is based on physiological measurements of the human
-  eye~\cite{Iskander2018}. The model incorporates an eye globe, orbital
-  suspension tissues and six \gls{em}. The excitation and activation patterns
-  for a variety of targets can be calculated using a closed-loop fixation
-  controller that drives the model to perform saccadic movements in a \gls{fd}
-  manner. The controller minimizes the error between the desired saccadic
-  trajectory and the predicted movement. Consequently, this model enables the
-  investigation muscle activation patterns during static fixation and analyze
-  the dynamics of various eye movements.
+  \texttt{OpenSim}, which is an open-source framework for modeling and
+  simulation of musculoskeletal systems. The calibration of the model parameters
+  is based on physiological measurements of the human eye. The model
+  incorporates an eye globe, orbital suspension tissues and six extraocular
+  muscles. The excitation and activation patterns for a variety of targets can
+  be calculated using the proposed closed-loop fixation controller that drives
+  the model to perform saccadic movements in a forward dynamics manner. The
+  controller minimizes the error between the desired saccadic trajectory and the
+  predicted movement. Consequently, this model enables the investigation muscle
+  activation patterns during static fixation and analyze the dynamics of various
+  eye movements.
 \end{abstract}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
@@ -124,19 +124,20 @@ Rapid and accurate eye movements are crucial for coordinated direction of
 gaze~\cite{Lee2006}. Studying human eye movement has significant implications
 for improving our understanding of the oculomotor system and treating visuomotor
 disorders. Over the past decades, biomechanics simulation has provided the means
-to analyze different human movements. The same principles can be used to analyze
-visual tasks by modeling the musculoskeletal properties of the oculomotor
-system. Consequently, this model can be used to investigate muscle activation
-patterns during static fixation, analyze the dynamics of various eye movements,
-calculate metabolic costs and simulate different eye disorders, such as
+to analyze different human movements~\cite{Delp2007}. The same principles can be
+used to analyze visual tasks by modeling the musculoskeletal properties of the
+oculomotor system. Consequently, this model can be used to investigate muscle
+activation patterns during static fixation, analyze the dynamics of various eye
+movements, calculate metabolic costs and simulate eye disorders, such as
 different forms of strabismus. Furthermore, it can be easily integrated with
 available full body models in order to analyze the relation between the
 vestibular and oculomotor systems.
 
-Eye movements are a generated from a coordination of the six \gls{em}. Clinical
-trials have provided a profound knowledge of how the \gls{em} act on the eye
-globe~\cite{Robinson1969a}, the resistive tension of the surrounding tissues and
-the length-tension relationship of the muscles~\cite{Collins1981}. Various
+Saccadic movements are a generated from a coordination of the six
+\gls{em}. Clinical trials have provided a profound knowledge on the properties
+of the \gls{em} and their line of action on the eye globe~\cite{Robinson1969a},
+the resistive tension of the surrounding tissues~\cite{Collins1981} and the
+length-tension relationship of the muscles~\cite{Iskander2018}. Various
 computational models of the extraocular muscles and orbital mechanics have been
 proposed, which provide insight and scientific bases for oculomotor
 biomechanics, control of eye movement and binocular misalignment. These models
@@ -144,9 +145,9 @@ focus on the realism of muscle behavior and they were based on the viscoelastic
 properties and physiological data \gls{em}.
 
 The first 3D biomechanical model was developed by~\cite{Robinson1964a,
-  Robinson1969}, who simplified the formulation by considering the elasticity of
-the \gls{em} ignoring their dynamics. The model incorporates anatomically
-realistic muscle paths and empirical innervation-length-tension
+  Robinson1969}, who simplified the formulation by only considering the
+elasticity of the \gls{em} ignoring their dynamics. The model incorporates
+anatomically realistic muscle paths and empirical innervation-length-tension
 relationships. To study the neural control of rapid saccadic movements, models
 using anatomical and mechanical properties of \gls{em} have been developed by
 accounting for the nonlinear muscle dynamics~\cite{Thelen2003a,
@@ -167,12 +168,12 @@ adult eye is approximately 0.0242 m (transverse, horizontal), 0.0237 m
 significant difference between sexes and age groups. In the transverse diameter,
 the eyeball size may vary from 0.021 m to 0.027 m. Thus, it can be approximated
 by a solid sphere with 0.012 m radius. The eyeball was constructed in
-\texttt{Blender}, an open-source software 3D creation software. We used a
-spherical mesh with 32 segments and 12 rings, to construct the vitreous humor
-(body) as solid sphere and a conical plate to construct the cornea. The weight
-of an average human eye is 0.0075 kg and the moment of inertia can be calculated
-similarly as in the case of a spherical homogeneous and isotropic object with
-radius 0.012 m ($\mat{I} = 2/5 m r^2$ at the center of mass).
+\texttt{Blender}, using a spherical mesh with 32 segments and 12 rings, to
+construct the vitreous humor (body) as solid sphere and a conical plate to
+construct the cornea. The weight of an average human eye is 0.0075 kg and the
+moment of inertia can be calculated similarly as in the case of a spherical
+homogeneous and isotropic object with ($\mat{I} = 2/5 m r^2$ at the center of
+mass).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \subsection*{Muscle Modeling}\label{sec:muscle-modeling}
@@ -180,29 +181,28 @@ radius 0.012 m ($\mat{I} = 2/5 m r^2$ at the center of mass).
 The six \gls{em}, including four rectus muscles and two oblique muscles, are
 controlled by the cranial nerves so as to track a visual target and to stabilize
 the image of the object. The \gls{lr} and \gls{mr} muscles form an antagonistic
-pair to produce horizontal eye movements. The \gls{sr} and \gls{ir} muscles form
-the vertical antagonist pair, which mainly controls vertical eye movement and
-also affects rotation about the horizontal plane and the line of sight
-(secondary action) due to insertion positions and the path of the muscles. The
-\gls{so} muscle passes through the cartilaginous trochlea attached to the
-orbital wall, which reflects the \gls{so} path by 51 deg. The \gls{io} muscle
-originates from the orbital wall anteroinferior to the globe center and inserts
-on the sclera posterior to the globe equator. The primary actions of \gls{so}
-and \gls{io} cause rotation of the globe around the visual axis and vertical
-movement.
+pair that produce horizontal eye movements. The \gls{sr} and \gls{ir} muscles
+form the vertical antagonist pair, which mainly controls vertical eye movement
+and also affects rotation about the horizontal plane and the line of sight
+(secondary action) due to insertion positions. The \gls{so} muscle passes
+through the cartilaginous trochlea attached to the orbital wall, which reflects
+the \gls{so} path by 51 deg. The \gls{io} muscle originates from the orbital
+wall anteroinferior to the globe center and inserts on the sclera posterior to
+the globe equator. The primary actions of \gls{so} and \gls{io} cause rotation
+of the globe around the visual axis and vertical movement.
 
 The model relies on the passive pulley assumption in order to keep it simple and
 provide faster simulation speed. \autoref{tab:muscle-path} shows the positions
 of muscle pulleys, as well as the origin and insertion points of the \gls{em},
 defined in the local body coordinates of the globe. The data is based on
 physiological measurements~\cite{Iskander2018}, with some minor adaptation so as
-to prevent penetration into the eye globe. Since no position was documented for
-the origin of the \gls{so}, a point close to the origins of the rectus muscles
-was chosen to match the fiber length in the primary position of the \gls{so}
-muscle.
+to prevent unrealistic penetration into the eye globe. Since no position was
+documented for the origin of the \gls{so}, a point close to the origins of the
+rectus muscles was chosen to match the fiber length in the primary position of
+the \gls{so} muscle.
 
 \begin{table}[ht]
-  \caption{Muscle path for the six \gls{em} (dimensions are given in
+  \caption{Muscle path points for the six \gls{em} (dimensions are given in
     meters).}\label{tab:muscle-path}
   \begin{tabular}{@{}cccccccccc@{}}
     \toprule
@@ -226,43 +226,63 @@ muscle.
 \end{table}
 
 The Millard muscle model~\cite{Millard2013} has been adopted for the modeling of
-the \gls{em}, which allows to manually fit the reported data for the \gls{fl}
-curves. The muscles were modeled using the rigid tendon assumption that ignores
-the elasticity of the tendon. This means that the series element of the muscle
-model is not included (the tendon length $l^T$ is equal to the tendon slack
-length $l_s^T$). This assumption is valid when the ratio of the tendon length to
-the muscle length is less or equal to one, as the in the case of all
-\gls{em}. \gls{em} are considered parallel-fibered muscles, so the pennation
-angle is zero ($\alpha = 0$). Maximum isometric force $f_o^M$, optimal fiber
-length $l_o^M$ and tendon length $l^T$ are presented
+the \gls{em}, which permits parameterization of the \gls{fl} curves according to
+the experimental measured data. The muscles were modeled using the rigid tendon
+assumption that ignores the elasticity of the tendon. This means that the series
+element of the muscle model is not included (the tendon length $l^T$ is equal to
+the tendon slack length $l_s^T$). This assumption is valid when the ratio of the
+tendon length to the muscle length is less or equal to one. \gls{em} are
+considered parallel-fibered muscles, so the pennation angle is zero
+($\alpha = 0$). The values for the maximum isometric force $f_o^M$, optimal
+fiber length $l_o^M$ and tendon length $l^T$ are presented
 in~\autoref{tab:muscle-path}.
 
 The active and passive \gls{fl} curves for the \gls{em} differ from that of a
 skeletal muscle. As shown in \autoref{fig:millard-curves}, we can fine-tune
-these curves so as to fit the experimental data available for the gls{lr}
-muscle. The following values where used for the active \gls{fl} curve:
+these curves so as to fit the experimental data available for the \gls{lr}
+muscle. The following values where used for the active
+(\autoref{tab:active-fl-curve}) and passive \gls{fl} curves.
 
-\begin{itemize}
-\item min norm active fiber length: 0.55
-\item transition norm fiver length: 0.7
-\item max norm active fiver length: 1.8
-\item shallow ascending slope: 2.4
-\item minimum value: 0.0
-\end{itemize}
-%
-and for the passive \gls{fl} curve accordingly:
-
-\begin{itemize}
-\item strain at zero force: -0.18
-\item strain at one norm force: 0.4
-\end{itemize}
+\begin{table}
+  \parbox{.45\linewidth}{
+    \centering
+    \caption{Parameters of the active \gls{fl} curve of the Millard muscle
+      model.}\label{tab:active-fl-curve}
+    \begin{tabular}{@{}cccccccccc@{}}
+      \toprule
+      \textbf{Parameter} & \textbf{Value} \\
+      \midrule
+      min norm active fiber length & 0.55 \\
+      transition norm fiver length & 0.7 \\
+      max norm active fiver length & 1.8 \\
+      shallow ascending slope &  2.4 \\
+      minimum value & 0.0 \\
+      \bottomrule
+    \end{tabular}
+  }
+  \quad
+  \parbox{.45\linewidth}{
+    \vspace{-1.5cm}
+    \centering
+    \caption{Parameters of the active \gls{fl} curve of the Millard muscle
+      model.}\label{tab:passive-fl-curve}
+    \begin{tabular}{@{}cccccccccc@{}}
+      \toprule
+      \textbf{Parameter} & \textbf{Value} \\
+      \midrule
+      strain at zero force & -0.18 \\
+      strain at one norm force & 0.4 \\
+      \bottomrule
+    \end{tabular}
+  }
+\end{table}
 
 \begin{figure}[ht]
   \subfloat[Active \gls{fl} curve]{\includegraphics[width=0.5\textwidth,
     keepaspectratio]{active-force-length-curve.png}\label{fig:active-force-length-curve}}
   \subfloat[Passive \gls{fl} curve]{\includegraphics[width=0.5\textwidth,
     keepaspectratio]{passive-force-length-curve.png}\label{fig:passive-force-length-curve}}
-  \caption{The active and passive \gls{fl} curve definition of the Millard
+  \caption{The active and passive \gls{fl} curve definition for the Millard
     muscle model as implemented in \texttt{OpenSim}.}\label{fig:millard-curves}
 \end{figure}
 
@@ -270,24 +290,24 @@ The parameters that describe the above relationships were chosen to fit the
 curves reported in~\cite{Iskander2018}, by matching the \gls{fl} relationship at
 maximum activation of the \gls{lr} muscle. This represents the first part of
 testing the fidelity of the model. Due to lack of data describing the other
-muscles’ \gls{fl} relationships, we used the parameters found describing the
-normalized curves of active and passive \gls{fl} relationships of the gls{lr}
-for the other \gls{em} as well.
+muscles, we used the parameters describing the normalized curves of active and
+passive \gls{fl} relationships of the \gls{lr} for the rest of the \gls{em}.
 
 \gls{em} have a higher fraction of fast twitch fibers and thus different
 \gls{fv} behavior, due to different structures compared to skeletal
 muscles. Despite that, the default Millard \gls{fv} curve was used for the six
 \gls{em}, since the behavior of the selected muscle model depends mainly on the
 maximum contraction velocity $v^{\text{max}}$. The maximum muscle contraction
-velocity is tuned so as to match the peak velocity of saccadic eye movement 15.7
-rad / s. Following this definition, the maximum muscle contraction velocity is
-given in optimal fiber length per seconds and it is thus different for each
-\gls{em}, as their optimal fiber length is different. Furthermore, because of
-the different structure of neural control of the eyes, activation and
-deactivation delays ($\tau_d = 5$ ms) are lower than in skeletal
-muscles. Finally, two separate wrapping spheres for the rectus muscles and the
-oblique muscles were created, to avoid abnormal changes on the \gls{fl} curve as
-the eyeball rotates in the three directions.
+velocity is tuned so as to match the peak velocity of saccadic eye movement
+$\omega^{\text{max}} = 15.7$ rad / s (900 deg / s). Following this definition,
+the maximum muscle contraction velocity is given in optimal fiber length per
+seconds and it is thus different for each \gls{em}, as their optimal fiber
+length is different ($v^{\text{max}} = \omega^{\text{max}} r /
+l_o^M$). Furthermore, because of the different structure of neural control of
+the eyes, activation and deactivation delays ($\tau_d = 5$ ms) are lower than in
+skeletal muscles. Finally, two separate wrapping spheres for the rectus muscles
+and the oblique muscles were created, to avoid abnormal changes on the \gls{fl}
+curve as the eyeball rotates.
 
 \begin{table}[ht]
   \caption{Millard muscle parameters for the
@@ -313,21 +333,21 @@ the eyeball rotates in the three directions.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \subsection*{Passive Connective Tissues}\label{sec:passive-connective-tissues}
 
-The passive connective tissues of the eyeball apply a restoring force, which
-brings the globe back to the central position when the net force from the
-\gls{em} is zero. These tissues include all non-muscular suspensory tissues,
-such as Tenon’s capsule, the optic nerve, the fat pad and the conjunctiva. The
-force-displacement curve of the net elasticity can be represented as
+The passive connective tissues apply a restoring force, which brings the globe
+back to the central position when the net force from the \gls{em} is zero. These
+tissues include all non-muscular suspensory tissues, such as Tenon’s capsule,
+the optic nerve, the fat pad and the conjunctiva. The force-displacement curve
+of the net elasticity can be represented as
 
 \begin{equation}\label{equ:passive-tissue}
   \vec{f}_t = -k_p \vec{q} - k_c 10^{-3} \vec{q}^3 - k_d * \vec{\dot{q}}
 \end{equation}
 % 
-where, $\vec{f}_t$ represents the passive tissue forces, $k_p= 0.002225$ N m /
-rad, $k_c= 34.5297$ N m / (rad\textsuperscript{3}) and $k_v= 0.002$ N m s / rad
-the constants and $\vec{\dot{q}} \inr{3}$ the rotational coordinates of the
-model~\cite{Collins1981}. These forces serve the eye’s stabilization, and are
-modeled using \texttt{OpenSim}'s expression based coordinate force.
+where, $\vec{f}_t$ is the passive tissue forces, $k_p= 0.002225$ N m / rad,
+$k_c= 34.5297$ N m / (rad\textsuperscript{3}) and $k_v= 0.002$ N m s / rad the
+constants and $\vec{\dot{q}} \inr{3}$ the rotational coordinates of the
+model~\cite{Collins1981}. These forces are modeled using \texttt{OpenSim}'s
+expression based coordinate force.
 
 % 0.33 * 9.8066500286389 * 10**-3 / (numpy.pi / 180) = 0.18542028707494282 * 0.012
 % 1.56 * 9.8066500286389 * 10**-3 / (numpy.pi / 180) ** 3 = 2877.4856893811248 * 0.012
@@ -340,23 +360,24 @@ modeled using \texttt{OpenSim}'s expression based coordinate force.
 
 A fixation controller was implemented as a custom \texttt{OpenSim} plugin. The
 parameters of the controller are: the desired horizontal $\theta_H$ and vertical
-$\theta_V$ fixation angles (in degrees), the saccade onset and velocity, and the
-gains of \gls{pd} tracking controller ($k_p$, $k_d $). A sigmoid function is
-used for generating smooth saccade trajectories
+$\theta_V$ fixation angles (in degrees), the saccade onset and velocity (in
+degrees), and the gains of \gls{pd} tracking controller ($k_p$, $k_d $). A
+sigmoid function is used for generating smooth saccade trajectories
 
 \begin{equation}\label{equ:sigmoid}
   \begin{aligned}
     \theta_d(t) &= \frac{a}{2} \Big(\tanh(b (t - t_0)) + 1\Big) \\
-    \dot{\theta}_d(t) &= \frac{a b}{2} \Big(\tanh^2(b (t - t_0)) - 1\Big) 
+    \dot{\theta}_d(t) &= \frac{a b}{2} \Big(\tanh^2(b (t - t_0)) - 1\Big)
   \end{aligned}
 \end{equation}
-%
+% 
 where $\theta_d(t)$ and $\dot{\theta}_d(t)$ represent the desired orientation
 and velocity at time $t$, $a$ the magnitude of the trajectory, $b$ the slope and
-$t_0$ a time shift constant. Provided a fixation goal $\theta_g$ and a desired
-saccade velocity $\dot{\theta}_g$ the parameters of the sigmoid function are
-defined as follows $a = \theta_g$, $b = 2 \dot{\theta}_g / \theta_g$. The
-\gls{pd} tracking controller has the following form
+$t_0$ a time shift constant. Provided a fixation goal $\theta_g$, a desired
+saccade velocity $\dot{\theta}_g$ and a saccade onset $t_g$ the parameters of
+the sigmoid function are defined as follows $a = \theta_g$,
+$b = 2 \dot{\theta}_g / \theta_g$ and $t_0 = t_s$. The \gls{pd} tracking
+controller has the following form
 
 \begin{equation}\label{equ:pd-controller}
   \ddot{\theta}(t) = k_p (\theta_d(t) - \theta(t)) + k_d (\dot{\theta}_d(t) -
@@ -364,19 +385,19 @@ defined as follows $a = \theta_g$, $b = 2 \dot{\theta}_g / \theta_g$. The
 \end{equation}
 
 The sign and magnitude of $\ddot{\theta}(t)$ both for the horizontal and
-vertical coordinates of the fixation target is used to actuate the corresponding
-muscles in order to achieve the desired goal. \autoref{fig:model} presents an
-instance of the model during simulation with the corresponding muscles
-activated. \autoref{fig:simulated-saccade} depicts the simulated coordinates,
-speeds and estimated \gls{em} activations that reproduce the desired saccade
-trajectory.
+vertical displacement of the fixation target is used to actuate the
+corresponding muscles in order to achieve the desired goal. \autoref{fig:model}
+presents an instance of the model during simulation with the corresponding
+muscles activated. \autoref{fig:simulated-saccade} depicts the simulated
+coordinates, speeds and estimated \gls{em} activations that reproduce the
+desired saccade trajectory.
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=.6\textwidth]{model.png}
   \caption{Model with a fixation at $\theta_H = -15$ deg $\theta_V = 15$ deg
-    during simulation. Blue denotes low and red high activation
-    values.}\label{fig:model}
+    during simulation. Blue denotes low and red high muscle activation
+    levels.}\label{fig:model}
 \end{figure}
 
 \begin{figure}[ht]
@@ -398,16 +419,16 @@ kinematics and dynamics analysis or as a tool for obtaining the muscle
 activations that generate a desired saccade, using a closed-loop fixation
 controller in a \gls{fd} manner. There is of course space for further
 improvement, which will enhance the accuracy and the predictability of the
-proposed computational eye model. In this study, we didn't attempt to model the
+proposed computational model. In this study, we didn't attempt to model the
 muscle pulleys~\cite{Kono2002a}, which vary as a function of the model
-coordinates. Furthermore, the users should consider validation of the eye model
-based on the requirements of the targeted utility of the model and the variables
-of interests.
+coordinates. Therefore, the users should consider performing further validation
+of the eye model based on the requirements of the targeted utility and the
+variables of interests.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
 \bibliography{mylibrary}
-\addcontentsline{toc}{chapter}{Bibliography}
+% \addcontentsline{toc}{chapter}{Bibliography}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \end{document}
