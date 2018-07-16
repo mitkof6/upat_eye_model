@@ -91,7 +91,7 @@ void FixationController::computeControls(const State& s, Vector& controls) const
     double z = zCoord.getValue(s); double zv = zCoord.getSpeedValue(s);
 
     // The sum of errors are used as Excitation levels in the model
-    // acceleration is unused because there are problems with the sigmoid
+    // acceleration is unused because causes problems
     double sumErrX = 0 * xdesa + get_kpT() * (xdes - x) + get_kdT() * (xdesv - xv);
     double sumErrY = 0 * ydesa + get_kpH() * (ydes - y) + get_kdH() * (ydesv - yv);
     double sumErrZ = 0 * zdesa + get_kpV() * (zdes - z) + get_kdV() * (zdesv - zv);

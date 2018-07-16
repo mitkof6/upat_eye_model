@@ -43,19 +43,19 @@ void addExpressionCoordinateForce(Model* model) {
     // recent versions may not have this problem.
     auto add_adb_tissue =
         new ExpressionBasedCoordinateForce("r_eye_add_abd",
-                                           "-0.002225*q-34.5297*0.0001*q^3-0*0.002*qdot");
+                                           "-0.002225*q-34.5297*0.0001*q^3-1*0.002*qdot");
     add_adb_tissue->setName("add_adb_tissue");
     model->addForce(add_adb_tissue);
 
     auto sup_inf_tissue =
         new ExpressionBasedCoordinateForce("r_eye_sup_inf",
-                                           "-0.002225*q-34.5297*0.0001*q^3-0*0.002*qdot");
+                                           "-0.002225*q-34.5297*0.0001*q^3-1*0.002*qdot");
     sup_inf_tissue->setName("sup_inf_tissue");
     model->addForce(sup_inf_tissue);
 
     auto inc_exc_tissue =
         new ExpressionBasedCoordinateForce("r_eye_inc_exc",
-                                           "-0.002225*q-34.5297*0.0001*q^3-0*0.002*qdot");
+                                           "-0.002225*q-34.5297*0.0001*q^3-1*0.002*qdot");
     inc_exc_tissue->setName("inc_exc_tissue");
     model->addForce(inc_exc_tissue);
 }
@@ -70,8 +70,8 @@ void simulateModel() {
     // Create a controller
     FixationController* controller = new FixationController();
     controller->setName("fixation_controller");
-    controller->set_thetaH(-15);
-    controller->set_thetaV(15);
+    controller->set_thetaH(15);
+    controller->set_thetaV(-15);
     controller->set_kpH(50);
     controller->set_kdH(1.5);
     controller->set_kpV(50);
@@ -79,7 +79,7 @@ void simulateModel() {
     controller->set_kpT(100);
     controller->set_kdT(0.5);
     controller->set_saccade_onset(0.5);
-    controller->set_saccade_velocity(600); // deg / s
+    controller->set_saccade_velocity(100); // deg / s
     model.addController(controller);
 
     // Build and initialize model
