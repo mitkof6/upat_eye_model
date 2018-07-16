@@ -1434,19 +1434,19 @@
 					<!--Coordinate (name) to apply force to.-->
 					<coordinate>r_eye_add_abd</coordinate>
 					<!--Expression of the force magnitude as a function of the coordinate value (q)and its time derivative (qdot). Note, expression cannot have any whitespaceseperating characters-->
-					<expression>-0.002225*q-34.5297*0.0001*q^3-0.002*qdot</expression>
+					<expression>-0.002225*q-34.5297*0.0001*q^3-0*0.002*qdot</expression>
 				</ExpressionBasedCoordinateForce>
 				<ExpressionBasedCoordinateForce name="sup_inf_tissue">
 					<!--Coordinate (name) to apply force to.-->
 					<coordinate>r_eye_sup_inf</coordinate>
 					<!--Expression of the force magnitude as a function of the coordinate value (q)and its time derivative (qdot). Note, expression cannot have any whitespaceseperating characters-->
-					<expression>-0.002225*q-34.5297*0.0001*q^3-0.002*qdot</expression>
+					<expression>-0.002225*q-34.5297*0.0001*q^3-0*0.002*qdot</expression>
 				</ExpressionBasedCoordinateForce>
 				<ExpressionBasedCoordinateForce name="inc_exc_tissue">
 					<!--Coordinate (name) to apply force to.-->
 					<coordinate>r_eye_inc_exc</coordinate>
 					<!--Expression of the force magnitude as a function of the coordinate value (q)and its time derivative (qdot). Note, expression cannot have any whitespaceseperating characters-->
-					<expression>-0.002225*q-34.5297*0.0001*q^3-0.002*qdot</expression>
+					<expression>-0.002225*q-34.5297*0.0001*q^3-0*0.002*qdot</expression>
 				</ExpressionBasedCoordinateForce>
 			</objects>
 		</ForceSet>
@@ -1500,7 +1500,7 @@
 					<!--saccade onset (s)-->
 					<saccade_onset>0.5</saccade_onset>
 					<!--desired saccade velocity (deg / s)-->
-					<saccade_velocity>100</saccade_velocity>
+					<saccade_velocity>600</saccade_velocity>
 				</FixationController>
 			</objects>
 			<groups />

@@ -32,7 +32,7 @@ FixationController::FixationController() : Controller() {
 }
 
 void FixationController::constructProperties() {
-    constructProperty_thetaH(0);
+    constructProperty_thetaH(-15);
     constructProperty_thetaV(0);
     constructProperty_kpH(50);
     constructProperty_kdH(1.5);
@@ -41,7 +41,7 @@ void FixationController::constructProperties() {
     constructProperty_kpT(100);
     constructProperty_kdT(0.5);
     constructProperty_saccade_onset(0.5);
-    constructProperty_saccade_velocity(100);
+    constructProperty_saccade_velocity(600);
 }
 
 void FixationController::computeControls(const State& s, Vector& controls) const {
@@ -67,19 +67,22 @@ void FixationController::computeControls(const State& s, Vector& controls) const
     double xdes = 0;
     double xdesv = 0;
     double xdesa = 0;
+
     auto sigmY = sigmoid(t,
                          get_saccade_onset(),
                          thetaH,
                          2 * desSaccadeVelocity / abs(thetaH));
-    double ydes = 0 + sigmY[0];
-    double ydesv = sigmY[1];
+
+    double ydes = isnan(sigmY[0]) ? 0 : sigmY[0];
+    double ydesv = isnan(sigmY[1]) ? 0 : sigmY[1];
     double ydesa = sigmY[2];
+
     auto sigmZ = sigmoid(t,
                          get_saccade_onset(),
                          thetaV,
                          2 * desSaccadeVelocity / abs(thetaV));
-    double zdes = 0 + sigmZ[0];
-    double zdesv = sigmZ[1];
+    double zdes = isnan(sigmZ[0]) ? 0 : sigmZ[0];
+    double zdesv = isnan(sigmZ[1]) ? 0 : sigmZ[1];
     double zdesa = sigmZ[2];
 
     // Get the current position and velocity
@@ -88,6 +91,7 @@ void FixationController::computeControls(const State& s, Vector& controls) const
     double z = zCoord.getValue(s); double zv = zCoord.getSpeedValue(s);
 
     // The sum of errors are used as Excitation levels in the model
+    // acceleration is unused because there are problems with the sigmoid
     double sumErrX = 0 * xdesa + get_kpT() * (xdes - x) + get_kdT() * (xdesv - xv);
     double sumErrY = 0 * ydesa + get_kpH() * (ydes - y) + get_kdH() * (ydesv - yv);
     double sumErrZ = 0 * zdesa + get_kpV() * (zdes - z) + get_kdV() * (zdesv - zv);
