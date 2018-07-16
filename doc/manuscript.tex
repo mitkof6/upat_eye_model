@@ -12,6 +12,7 @@
 \usepackage[pdftex]{graphicx}
 \graphicspath{{./figures/}{./tikz/}}
 \DeclareGraphicsExtensions{.pdf,.png,.jpg}
+\usepackage{wrapfig}
 \usepackage{caption}
 \captionsetup{labelfont=bf}
 \usepackage[caption=false,labelfont=bf]{subfig}
@@ -342,15 +343,15 @@ the optic nerve, the fat pad and the conjunctiva. The force-displacement curve
 of the net elasticity can be represented as
 
 \begin{equation}\label{equ:passive-tissue}
-  \vec{f}_t = -k_p \vec{q} - k_c 10^{-3} \vec{q}^3 - k_d * \vec{\dot{q}}
+  \vec{f}_t = -k_p \vec{q} - k_c 10^{-3} \vec{q}^3 - k_v * \vec{\dot{q}}
 \end{equation}
 %
 where, $\vec{f}_t$ is the passive tissue forces,
 $k_p= 0.002225 \si{\N \m / \radian}$, $k_c= 34.5297 \si{\N \m / \radian^3}$ and
 $k_v= 0.002$ $\si{\N \m / (\radian / \s)}$ the constants and
 $\vec{\dot{q}} \inr{3}$ the rotational coordinates of the
-model~\cite{Collins1981} \hl{TODO}. These forces are modeled using
-\texttt{OpenSim}'s expression based coordinate force.
+model~\cite{Collins1981}. These forces are modeled using \texttt{OpenSim}'s
+expression based coordinate force.
 
 % 0.33 * 9.8066500286389 * 10**-3 / (numpy.pi / 180) = 0.18542028707494282 * 0.012
 % 1.56 * 9.8066500286389 * 10**-3 / (numpy.pi / 180) ** 3 = 2877.4856893811248 * 0.012
@@ -397,20 +398,36 @@ desired saccade trajectory.
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=.6\textwidth]{eye-model.png}
-  \caption{Model with a fixation at $\theta_H = -15$ deg $\theta_V = 15$ deg
-    during simulation. Blue denotes low and red high muscle activation
-    levels.}\label{fig:model}
+  \includegraphics[width=.7\textwidth]{eye-model.png}
+  \caption{Model with a fixation at $\theta_H = -15 \si{\degree}$,
+    $\theta_V = 15 \si{\degree}$ during simulation. Blue denotes low and red high
+    muscle activation levels.}\label{fig:model}
 \end{figure}
 
 \begin{figure}[ht]
+  \vspace{-1.6cm}
   \centering
-  \includegraphics[width=1.\textwidth]{UPAT_Eye_Model_Passive_Pulleys_v3_States[-15][15].pdf}
-  \caption{Simulated saccade response with a fixation at $\theta_H = -15$ deg
-    $\theta_V = 15$ deg. The left subplot represents the simulated generalized
-    coordinates; the middle the coordinate speeds; right the estimated \gls{em}
+  \subfloat[$\theta_H = 15 \si{\degree}$, $\theta_V = 0 \si{\degree}$, $b = 600
+  \si{\degree / \s}$ and $k_v = 0 \si{\N \m / (\radian / \s)}$]{\includegraphics[width=1.\textwidth,
+    keepaspectratio]{UPAT_Eye_Model_Passive_Pulleys_v3_State_h15v0kv0.pdf}\label{fig:simulated-saccade-a}} 
+  \\
+  \subfloat[$\theta_H = 0 \si{\degree}$, $\theta_V = 15 \si{\degree}$, $b = 600
+  \si{\degree / \s}$ and $k_v = 0 \si{\N \m / (\radian / \s)}$]{\includegraphics[width=1.\textwidth,
+    keepaspectratio]{UPAT_Eye_Model_Passive_Pulleys_v3_Statesh0v15kv0.pdf}\label{fig:simulated-saccade-b}}
+  \\
+  \subfloat[$\theta_H = -15 \si{\degree}$, $\theta_V = 15 \si{\degree}$, $b = 600
+  \si{\degree / \s}$ and $k_v = 0 \si{\N \m / (\radian / \s)}$]{\includegraphics[width=1.\textwidth,
+    keepaspectratio]{UPAT_Eye_Model_Passive_Pulleys_v3_Statesh-15v15kv0.pdf}\label{fig:simulated-saccade-c}}
+  \\
+  \subfloat[$\theta_H = -15 \si{\degree}$, $\theta_V = 15 \si{\degree}$, $b = 100
+  \si{\degree / \s}$ and $k_v = 0.002 \si{\N \m / (\radian / \s)}$]{\includegraphics[width=1.\textwidth,
+    keepaspectratio]{UPAT_Eye_Model_Passive_Pulleys_v3_Statesh15v-15kv0002.pdf}\label{fig:simulated-saccade-d}}
+  \caption{Simulated saccade response for different model parameters. The left
+    subplot represents the simulated generalized coordinates; the middle the
+    coordinate speeds; right the estimated \gls{em}
     activations.}\label{fig:simulated-saccade}
 \end{figure}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \section*{Conclusion}\label{sec:concluison}
