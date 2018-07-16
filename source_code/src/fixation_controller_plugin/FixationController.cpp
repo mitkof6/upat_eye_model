@@ -13,17 +13,17 @@ using namespace SimTK;
  * ----------
  * t : time to be evaluated
  * t0 : delay
- * A : magnitude
- * B : slope
+ * a : magnitude
+ * b : slope
  *
  * Returns
  * -------
  * (y, y', y'')
  */
-Vec3 sigmoid(double t, double t0, double A, double B) {
-    return Vec3(A * (tanh(B * (t - t0)) + 1) / 2,
-                -(A * B * (pow(tanh(B * (t - t0)), 2) - 1)) / 2,
-                A * pow(B, 2) * tanh(B * (t - t0)) * (pow(tanh(B * (t - t0)), 2) - 1)
+Vec3 sigmoid(double t, double t0, double a, double b) {
+    return Vec3(a * (tanh(b * (t - t0)) + 1) / 2,
+                -(a * b * (pow(tanh(b * (t - t0)), 2) - 1)) / 2,
+                a * pow(b, 2) * tanh(b * (t - t0)) * (pow(tanh(b * (t - t0)), 2) - 1)
     );
 }
 
