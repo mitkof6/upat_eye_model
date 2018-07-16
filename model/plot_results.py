@@ -92,7 +92,7 @@ def index_containing_substring(list_str, pattern):
 
 def smooth(x):
     from scipy.signal import medfilt, gauss_spline
-    return medfilt(x, 9)
+    return medfilt(x, 1)
     # return x
 
 ###############################################################################
@@ -100,7 +100,8 @@ def smooth(x):
 
 # state = 'UPAT_Eye_Model_Passive_Pulleys_v3_State_h15v0kv0.sto'
 # state = 'UPAT_Eye_Model_Passive_Pulleys_v3_Statesh0v15kv0.sto'
-state = 'UPAT_Eye_Model_Passive_Pulleys_v3_Statesh-15v15kv0.sto'
+# state = 'UPAT_Eye_Model_Passive_Pulleys_v3_Statesh-15v15kv0.sto'
+state = 'UPAT_Eye_Model_Passive_Pulleys_v3_Statesh15v-15kv0002.sto'
 
 header, labels, data = readMotionFile(state)
 
