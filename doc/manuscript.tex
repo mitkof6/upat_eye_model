@@ -165,21 +165,18 @@ controllers~\cite{James2018}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \subsection*{Eye Modeling}\label{sec:eye-Modeling}
 
-The eye model consists of the eyeball, three pairs of \gls{em} and the
+The eye model consists of the eye globe, three pairs of \gls{em} and the
 connective passive tissues. The size of an emmetropic human adult eye is
 approximately $0.0242 \si{\m}$ (transverse, horizontal), $0.0237 \si{\m}$
 (sagittal, vertical), $0.022 - 0.0248 \si{\m}$ (axial, anteroposterior) with no
 significant difference between sexes and age groups. In the transverse diameter,
-the eyeball size may vary from $0.021 \si{\m}$ to $0.027 \si{\m}$, thus it can
-be approximated by a solid sphere of radius $r = 0.012 \si{\m}$. The eyeball was
-constructed in \texttt{Blender}, using a spherical mesh with 32 segments and 12
-rings, to construct the vitreous humor (body) as solid sphere and a conical
-plate to construct the cornea.The weight of an average human eye is
-$m = 0.0075 \si{\kg}$ and the moment of inertia can be calculated assuming a
-spherical homogeneous and isotropic model $I = 2 / 5 m r^2$. The eye has three
-rotational \gls{dofs} with respect to the frame of reference, namely
-incyclotosion-excyclotosion ($x$-axis), adduction-abduction ($y$-axis) and
-supraduction-infraduction ($z$-axis).
+the eye may vary from $0.021 \si{\m}$ to $0.027 \si{\m}$, thus it can be
+approximated by a solid sphere of radius $r = 0.012 \si{\m}$. The weight of an
+average human eye is $m = 0.0075 \si{\kg}$ and the moment of inertia can be
+calculated assuming a spherical homogeneous and isotropic model
+$I = 2 / 5 m r^2$. The eye has three rotational \gls{dofs}, namely
+incyclotosion-excyclotosion ($\vec{x}$-axis), adduction-abduction
+($\vec{y}$-axis) and supraduction-infraduction ($\vec{z}$-axis).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \subsection*{Muscle Modeling}\label{sec:muscle-modeling}
@@ -197,9 +194,9 @@ wall anteroinferior to the globe center and inserts on the sclera posterior to
 the globe equator. The primary actions of \gls{so} and \gls{io} cause rotation
 of the globe around the visual axis and vertical movement.
 
-The model relies on the passive pulley assumption. \autoref{tab:muscle-path}
+The model relies on the passive pulley assumption. \autoref{tab:eye-muscle-path}
 shows the positions of the origin, insertion and passive muscle pulleys for the
-\gls{em}, defined in the local body coordinates of the eyeball. The data are
+\gls{em}, defined in the local body coordinates of the eye globe. The data are
 based on physiological measurements~\cite{Iskander2018}, with some minor
 modification so as to prevent unrealistic muscle-surface penetration. Since no
 position was documented for the origin of the \gls{so}, a point close to the
@@ -209,7 +206,7 @@ primary position of the \gls{so} muscle.
 \begin{table}[ht]
   \centering
   \caption{Muscle path points for the six \gls{em} defined in the local frame of
-    the eyeball (dimensions are given in meters).}\label{tab:muscle-path}
+    the eye globe (dimensions are given in meters).}\label{tab:eye-muscle-path}
   \begin{tabular}{@{}cccccccccc@{}}
     \toprule
     \textbf{Muscle}
@@ -239,23 +236,43 @@ series element of the muscle model is not included (the tendon length $l^T$ is
 equal to the tendon slack length $l_s^T$). \gls{em} are considered
 parallel-fibered muscles, so the pennation angle is zero ($\alpha = 0$). The
 values for the maximum isometric force $f_o^M$, optimal fiber length $l_o^M$ and
-tendon length $l^T$ are presented in~\autoref{tab:muscle-parameters}.
+tendon length $l^T$ are presented in~\autoref{tab:eye-muscle-parameters}.
+
+\begin{table}[ht]
+  \centering
+  \caption{Millard muscle parameters for the
+    \gls{em}.}\label{tab:eye-muscle-parameters}
+  \begin{tabular}{@{}cccccccccc@{}}
+    \toprule
+    \thead{Muscle \\ \quad}
+    & \thead{Maximum Isometric \\ Force (N)}  % math \si not in bold
+    & \thead{Optimal Fiber \\ Length (m)}
+    & \thead{Tendon Slack \\ Length (m)}
+    & \thead{Maximum Contraction \\ Velocity (m / s)} \\
+    \midrule
+    \gls{lr} & 1.4710 & 0.04898 & 0.0084 & 3.8483 \\
+    \gls{mr} & 1.5740 & 0.04084 & 0.0038 & 4.6155 \\
+    \gls{sr} & 1.1768 & 0.04487 & 0.0054 & 4.2009 \\
+    \gls{ir} & 1.4269 & 0.04549 & 0.0048 & 4.1437 \\
+    \gls{so} & 0.6031 & 0.03956 & 0.0265 & 4.7648 \\
+    \gls{io} & 0.5590 & 0.04110 & 0.0015 & 3.5863 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 The \gls{fl} and \gls{fpe} characteristic curves of the \gls{em} differ
 significantly from those of a skeletal muscle. As shown in
 \autoref{fig:millard-curves}, we can fine-tune the curve parameters so as to fit
 the experimental data available for the \gls{lr} muscle. The values for the
 \gls{fl} and \gls{fpe} characteristic curves are summarized in
-Tables~\ref{tab:fl-curve} and~\ref{tab:fpe-curve}, respectively. Due to lack of
-data describing the other muscles, the parameters found for the \gls{lr} muscle
-where used for the rest of the \gls{em}.
+Tables~\ref{tab:eye-fl-curve} and~\ref{tab:eye-fpe-curve}, respectively.
 
 \begin{table}
   \centering
   \parbox{.45\linewidth}{
     \centering
     \caption{Parameters of the \gls{fl} characteristic curve for the
-      \gls{em}.}\label{tab:fl-curve}
+      \gls{em}.}\label{tab:eye-fl-curve}
     \begin{tabular}{@{}cccccccccc@{}}
       \toprule
       \textbf{Parameter} & \textbf{Value} \\
@@ -272,8 +289,8 @@ where used for the rest of the \gls{em}.
   \parbox{.45\linewidth}{
     \vspace{-1.5cm}
     \centering
-    \caption{Parameters of the \gls{fpe} characteristic curve for the for the
-      \gls{em}.}\label{tab:fpe-curve}
+    \caption{Parameters of the \gls{fpe} characteristic curve for the
+      \gls{em}.}\label{tab:eye-fpe-curve}
     \begin{tabular}{@{}cccccccccc@{}}
       \toprule
       \textbf{Parameter} & \textbf{Value} \\
@@ -309,34 +326,12 @@ different for each \gls{em}, as their optimal fiber length is different
 nerve is much shorter that the average muscle nerve, activation and deactivation
 delays ($\tau_a = \tau_d = 5 \si{\milli\second}$) are smaller. Finally, two
 separate wrapping spheres for the rectus muscles and the oblique muscles were
-created, to avoid abnormal changes on the \gls{fl} curve as the eyeball rotates.
-
-\begin{table}[ht]
-  \centering
-  \caption{Millard muscle parameters for the
-    \gls{em}.}\label{tab:muscle-parameters}
-  \begin{tabular}{@{}cccccccccc@{}}
-    \toprule
-    \thead{Muscle \\ \quad}
-    & \thead{Maximum Isometric \\ Force (N)}  % math \si not in bold
-    & \thead{Optimal Fiber \\ Length (m)}
-    & \thead{Tendon Slack \\ Length (m)}
-    & \thead{Maximum Contraction \\ Velocity (m / s)} \\
-    \midrule
-    \gls{lr} & 1.4710 & 0.04898 & 0.0084 & 3.8483 \\
-    \gls{mr} & 1.5740 & 0.04084 & 0.0038 & 4.6155 \\
-    \gls{sr} & 1.1768 & 0.04487 & 0.0054 & 4.2009 \\
-    \gls{ir} & 1.4269 & 0.04549 & 0.0048 & 4.1437 \\
-    \gls{so} & 0.6031 & 0.03956 & 0.0265 & 4.7648 \\
-    \gls{io} & 0.5590 & 0.04110 & 0.0015 & 3.5863 \\
-    \bottomrule
-  \end{tabular}
-\end{table}
+created, to avoid abnormal changes on the \gls{fl} curve as the eye rotates.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \subsection*{Passive Connective Tissues}\label{sec:passive-connective-tissues}
 
-The passive connective tissues apply a restoring force, which brings the eyeball
+The passive connective tissues apply a restoring force, which brings the eye
 back to the central position when the net force from the \gls{em} is zero. These
 tissues include all non-muscular suspensory tissues, such as Tenon's capsule,
 the optic nerve, the fat pad and the conjunctiva. The force-displacement curve
