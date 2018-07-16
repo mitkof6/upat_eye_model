@@ -3,6 +3,7 @@
 \usepackage{bm,txfonts}       % bm: bold for Greek letters, txfonts -> varmathbb
 \usepackage{breqn}              % automatically brake line in equations
 \usepackage{cancel}
+\usepackage{siunitx}            % include before arydshln
 \usepackage{arydshln}         % matrix dash lines
 \usepackage{booktabs}         % tables
 \usepackage{color,soul}         % used for \hl{}
@@ -51,6 +52,8 @@
 \newacronym{em}{EOMs}{Extraocular Muscles}
 \newacronym{fl}{F-L}{Force-Length}
 \newacronym{fv}{F-V}{Force-Velocity}
+\newacronym{fpe}{F-PE}{Passive-Force-Length}
+\newacronym{ft}{F-T}{Tendon-Force-Length}
 \makeglossaries{}
 
 % custom commands
@@ -101,7 +104,7 @@
   Studying human eye movements has significant implications for improving our
   understanding of the oculomotor system and treating various visuomotor
   disorders. An open-source musculoskeletal model of the human eye, that can be
-  used for kinematics and dynamics analysis, is implemented based on the data
+  used for kinematics and dynamics analysis, is constructed based on the data
   reported in literature and made publicly available\footnote{SimTK project:
     \url{https://simtk.org/projects/eye}}. The model is implemented in
   \texttt{OpenSim}, which is an open-source framework for modeling and
@@ -161,19 +164,21 @@ controllers~\cite{James2018}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \subsection*{Eye Modeling}\label{sec:eye-Modeling}
 
-The orbital plant consists of the globe (eyeball), three pairs of extraocular
-muscles and the connective passive tissues. The size of an emmetropic human
-adult eye is approximately 0.0242 m (transverse, horizontal), 0.0237 m
-(sagittal, vertical), 0.022–0.0248 m (axial, anteroposterior) with no
+The eye model consists of the eyeball, three pairs of \gls{em} and the
+connective passive tissues. The size of an emmetropic human adult eye is
+approximately $0.0242 \si{\m}$ (transverse, horizontal), $0.0237 \si{\m}$
+(sagittal, vertical), $0.022 - 0.0248 \si{\m}$ (axial, anteroposterior) with no
 significant difference between sexes and age groups. In the transverse diameter,
-the eyeball size may vary from 0.021 m to 0.027 m. Thus, it can be approximated
-by a solid sphere with 0.012 m radius. The eyeball was constructed in
-\texttt{Blender}, using a spherical mesh with 32 segments and 12 rings, to
-construct the vitreous humor (body) as solid sphere and a conical plate to
-construct the cornea. The weight of an average human eye is 0.0075 kg and the
-moment of inertia can be calculated similarly as in the case of a spherical
-homogeneous and isotropic object with ($\mat{I} = 2/5 m r^2$ at the center of
-mass).
+the eyeball size may vary from $0.021 \si{\m}$ to $0.027 \si{\m}$, thus it can
+be approximated by a solid sphere of radius $r = 0.012 \si{\m}$. The eyeball was
+constructed in \texttt{Blender}, using a spherical mesh with 32 segments and 12
+rings, to construct the vitreous humor (body) as solid sphere and a conical
+plate to construct the cornea.The weight of an average human eye is
+$m = 0.0075 \si{\kg}$ and the moment of inertia can be calculated assuming a
+spherical homogeneous and isotropic model $I = 2 / 5 m r^2$. The eye has three
+rotational \gls{dofs} with respect to the frame of reference, namely
+incyclotosion-excyclotosion ($x$-axis), adduction-abduction ($y$-axis) and
+supraduction-infraduction ($z$-axis).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \subsection*{Muscle Modeling}\label{sec:muscle-modeling}
@@ -191,20 +196,19 @@ wall anteroinferior to the globe center and inserts on the sclera posterior to
 the globe equator. The primary actions of \gls{so} and \gls{io} cause rotation
 of the globe around the visual axis and vertical movement.
 
-The model relies on the passive pulley assumption in order to keep it simple and
-provide faster simulation speed. \autoref{tab:muscle-path} shows the positions
-of muscle pulleys, as well as the origin and insertion points of the \gls{em},
-defined in the local body coordinates of the globe. The data is based on
-physiological measurements~\cite{Iskander2018}, with some minor adaptation so as
-to prevent unrealistic penetration into the eye globe. Since no position was
-documented for the origin of the \gls{so}, a point close to the origins of the
-rectus muscles was chosen to match the fiber length in the primary position of
-the \gls{so} muscle.
+The model relies on the passive pulley assumption. \autoref{tab:muscle-path}
+shows the positions of the origin, insertion and passive muscle pulleys for the
+\gls{em}, defined in the local body coordinates of the eyeball. The data are
+based on physiological measurements~\cite{Iskander2018}, with some minor
+modification so as to prevent unrealistic muscle-surface penetration. Since no
+position was documented for the origin of the \gls{so}, a point close to the
+origins of the rectus muscles was chosen to match the fiber length in the
+primary position of the \gls{so} muscle.
 
 \begin{table}[ht]
   \centering
-  \caption{Muscle path points for the six \gls{em} (dimensions are given in
-    meters).}\label{tab:muscle-path}
+  \caption{Muscle path points for the six \gls{em} defined in the local frame of
+    the eyeball (dimensions are given in meters).}\label{tab:muscle-path}
   \begin{tabular}{@{}cccccccccc@{}}
     \toprule
     \textbf{Muscle}
@@ -227,29 +231,30 @@ the \gls{so} muscle.
 \end{table}
 
 The Millard muscle model~\cite{Millard2013} has been adopted for the modeling of
-the \gls{em}, which permits parameterization of the \gls{fl} curves according to
-the experimental measured data. The muscles were modeled using the rigid tendon
-assumption that ignores the elasticity of the tendon. This means that the series
-element of the muscle model is not included (the tendon length $l^T$ is equal to
-the tendon slack length $l_s^T$). This assumption is valid when the ratio of the
-tendon length to the muscle length is less or equal to one. \gls{em} are
-considered parallel-fibered muscles, so the pennation angle is zero
-($\alpha = 0$). The values for the maximum isometric force $f_o^M$, optimal
-fiber length $l_o^M$ and tendon length $l^T$ are presented
-in~\autoref{tab:muscle-path}.
+the \gls{em}, permitting parameterization of the characteristic curves according
+to the experimental measured data. The muscles were modeled using the rigid
+tendon assumption that ignores the elasticity of the tendon. This means that the
+series element of the muscle model is not included (the tendon length $l^T$ is
+equal to the tendon slack length $l_s^T$). \gls{em} are considered
+parallel-fibered muscles, so the pennation angle is zero ($\alpha = 0$). The
+values for the maximum isometric force $f_o^M$, optimal fiber length $l_o^M$ and
+tendon length $l^T$ are presented in~\autoref{tab:muscle-parameters}.
 
-The active and passive \gls{fl} curves for the \gls{em} differ from that of a
-skeletal muscle. As shown in \autoref{fig:millard-curves}, we can fine-tune
-these curves so as to fit the experimental data available for the \gls{lr}
-muscle. The following values where used for the active
-(\autoref{tab:active-fl-curve}) and passive \gls{fl} curves.
+The \gls{fl} and \gls{fpe} characteristic curves of the \gls{em} differ
+significantly from those of a skeletal muscle. As shown in
+\autoref{fig:millard-curves}, we can fine-tune the curve parameters so as to fit
+the experimental data available for the \gls{lr} muscle. The values for the
+\gls{fl} and \gls{fpe} characteristic curves are summarized in
+Tables~\ref{tab:fl-curve} and~\ref{tab:fpe-curve}, respectively. Due to lack of
+data describing the other muscles, the parameters found for the \gls{lr} muscle
+where used for the rest of the \gls{em}.
 
 \begin{table}
   \centering
   \parbox{.45\linewidth}{
     \centering
-    \caption{Parameters of the active \gls{fl} curve of the Millard muscle
-      model.}\label{tab:active-fl-curve}
+    \caption{Parameters of the \gls{fl} characteristic curve for the
+      \gls{em}.}\label{tab:fl-curve}
     \begin{tabular}{@{}cccccccccc@{}}
       \toprule
       \textbf{Parameter} & \textbf{Value} \\
@@ -266,8 +271,8 @@ muscle. The following values where used for the active
   \parbox{.45\linewidth}{
     \vspace{-1.5cm}
     \centering
-    \caption{Parameters of the active \gls{fl} curve of the Millard muscle
-      model.}\label{tab:passive-fl-curve}
+    \caption{Parameters of the \gls{fpe} characteristic curve for the for the
+      \gls{em}.}\label{tab:fpe-curve}
     \begin{tabular}{@{}cccccccccc@{}}
       \toprule
       \textbf{Parameter} & \textbf{Value} \\
@@ -281,36 +286,29 @@ muscle. The following values where used for the active
 
 \begin{figure}[ht]
   \centering
-  \subfloat[Active \gls{fl} curve]{\includegraphics[width=0.5\textwidth,
+  \subfloat[\gls{fl} curve]{\includegraphics[width=0.5\textwidth,
     keepaspectratio]{active-force-length-curve.png}\label{fig:active-force-length-curve}}
-  \subfloat[Passive \gls{fl} curve]{\includegraphics[width=0.5\textwidth,
+  \subfloat[\gls{fl} curve]{\includegraphics[width=0.5\textwidth,
     keepaspectratio]{passive-force-length-curve.png}\label{fig:passive-force-length-curve}}
-  \caption{The active and passive \gls{fl} curve definition for the Millard
-    muscle model as implemented in \texttt{OpenSim}.}\label{fig:millard-curves}
+  \caption{The \gls{fl} and \gls{fpe} curve definition for the Millard muscle
+    model as implemented in \texttt{OpenSim}.}\label{fig:millard-curves}
 \end{figure}
-
-The parameters that describe the above relationships were chosen to fit the
-curves reported in~\cite{Iskander2018}, by matching the \gls{fl} relationship at
-maximum activation of the \gls{lr} muscle. This represents the first part of
-testing the fidelity of the model. Due to lack of data describing the other
-muscles, we used the parameters describing the normalized curves of active and
-passive \gls{fl} relationships of the \gls{lr} for the rest of the \gls{em}.
 
 \gls{em} have a higher fraction of fast twitch fibers and thus different
 \gls{fv} behavior, due to different structures compared to skeletal
 muscles. Despite that, the default Millard \gls{fv} curve was used for the six
-\gls{em}, since the behavior of the selected muscle model depends mainly on the
+\gls{em}, since the behavior of the selected muscle model depends heavily on the
 maximum contraction velocity $v^{\text{max}}$. The maximum muscle contraction
 velocity is tuned so as to match the peak velocity of saccadic eye movement
-$\omega^{\text{max}} = 15.7$ rad / s (900 deg / s). Following this definition,
-the maximum muscle contraction velocity is given in optimal fiber length per
-seconds and it is thus different for each \gls{em}, as their optimal fiber
-length is different ($v^{\text{max}} = \omega^{\text{max}} r /
-l_o^M$). Furthermore, because of the different structure of neural control of
-the eyes, activation and deactivation delays ($\tau_d = 5$ ms) are lower than in
-skeletal muscles. Finally, two separate wrapping spheres for the rectus muscles
-and the oblique muscles were created, to avoid abnormal changes on the \gls{fl}
-curve as the eyeball rotates.
+$\omega^{\text{max}} = 15.7 \si{\radian / \second}$
+($900 \si{\degree / \second}$). Following this definition, the maximum muscle
+contraction velocity is given in optimal fiber length per seconds and it is thus
+different for each \gls{em}, as their optimal fiber length is different
+($v^{\text{max}} = \omega^{\text{max}} r / l_o^M$). Furthermore, since the optic
+nerve is much shorter that the average muscle nerve, activation and deactivation
+delays ($\tau_a = \tau_d = 5 \si{\milli\second}$) are smaller. Finally, two
+separate wrapping spheres for the rectus muscles and the oblique muscles were
+created, to avoid abnormal changes on the \gls{fl} curve as the eyeball rotates.
 
 \begin{table}[ht]
   \centering
@@ -318,8 +316,8 @@ curve as the eyeball rotates.
     \gls{em}.}\label{tab:muscle-parameters}
   \begin{tabular}{@{}cccccccccc@{}}
     \toprule
-    \thead{Muscle}
-    & \thead{Maximum Isometric \\ Force (N)}
+    \thead{Muscle \\ \quad}
+    & \thead{Maximum Isometric \\ Force (N)}  % math \si not in bold
     & \thead{Optimal Fiber \\ Length (m)}
     & \thead{Tendon Slack \\ Length (m)}
     & \thead{Maximum Contraction \\ Velocity (m / s)} \\
@@ -337,21 +335,22 @@ curve as the eyeball rotates.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \subsection*{Passive Connective Tissues}\label{sec:passive-connective-tissues}
 
-The passive connective tissues apply a restoring force, which brings the globe
+The passive connective tissues apply a restoring force, which brings the eyeball
 back to the central position when the net force from the \gls{em} is zero. These
-tissues include all non-muscular suspensory tissues, such as Tenon’s capsule,
+tissues include all non-muscular suspensory tissues, such as Tenon's capsule,
 the optic nerve, the fat pad and the conjunctiva. The force-displacement curve
 of the net elasticity can be represented as
 
 \begin{equation}\label{equ:passive-tissue}
   \vec{f}_t = -k_p \vec{q} - k_c 10^{-3} \vec{q}^3 - k_d * \vec{\dot{q}}
 \end{equation}
-% 
-where, $\vec{f}_t$ is the passive tissue forces, $k_p= 0.002225$ N m / rad,
-$k_c= 34.5297$ N m / (rad\textsuperscript{3}) and $k_v= 0.002$ N m s / rad the
-constants and $\vec{\dot{q}} \inr{3}$ the rotational coordinates of the
-model~\cite{Collins1981}. These forces are modeled using \texttt{OpenSim}'s
-expression based coordinate force.
+%
+where, $\vec{f}_t$ is the passive tissue forces,
+$k_p= 0.002225 \si{\N \m / \radian}$, $k_c= 34.5297 \si{\N \m / \radian^3}$ and
+$k_v= 0.002$ $\si{\N \m / (\radian / \s)}$ the constants and
+$\vec{\dot{q}} \inr{3}$ the rotational coordinates of the
+model~\cite{Collins1981} \hl{TODO}. These forces are modeled using
+\texttt{OpenSim}'s expression based coordinate force.
 
 % 0.33 * 9.8066500286389 * 10**-3 / (numpy.pi / 180) = 0.18542028707494282 * 0.012
 % 1.56 * 9.8066500286389 * 10**-3 / (numpy.pi / 180) ** 3 = 2877.4856893811248 * 0.012
@@ -398,7 +397,7 @@ desired saccade trajectory.
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=.6\textwidth]{model.png}
+  \includegraphics[width=.6\textwidth]{eye-model.png}
   \caption{Model with a fixation at $\theta_H = -15$ deg $\theta_V = 15$ deg
     during simulation. Blue denotes low and red high muscle activation
     levels.}\label{fig:model}
