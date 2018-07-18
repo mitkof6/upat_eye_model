@@ -90,13 +90,34 @@ def index_containing_substring(list_str, pattern):
     return indices
 
 
+def sigmoid(t, t0, A, B):
+    """Implementation of smooth sigmoid function.
+
+    Parameters
+    ----------
+    t: time to be evalutaed
+    t0: delay
+    A: magnitude
+    B: slope
+
+    Returns
+    -------
+    (y, y', y'')
+
+    """
+    return (A * (np.tanh(B * (t - t0)) + 1) / 2,
+            A * B * (- np.tanh(B * (t - t0)) ** 2 + 1) / 2,
+            - A * B ** 2 * (- np.tanh(B * (t - t0)) ** 2 + 1)
+            * np.tanh(B * (t - t0)))
+
+
 def smooth(x):
     from scipy.signal import medfilt, gauss_spline
-    return medfilt(x, 1)
+    return medfilt(x, 1) # 7
     # return x
 
-###############################################################################
 
+###############################################################################
 
 # state = 'UPAT_Eye_Model_Passive_Pulleys_v3_State_h15v0kv0.sto'
 # state = 'UPAT_Eye_Model_Passive_Pulleys_v3_Statesh0v15kv0.sto'
@@ -111,24 +132,34 @@ coordinates = [1, 2, 3]
 speeds = [7, 8, 9]
 activations = index_containing_substring(labels, 'activation')
 
+theta = np.ceil(np.rad2deg(np.amax(data[:, coordinates])))
+v = np.ceil(np.rad2deg(np.amax(data[:, speeds])))
+t0 = 0.5
+A = theta
+B = 2 * v / theta
+[x, v, a] = sigmoid(time, t0, A, B)
+
 fig, ax = plt.subplots(nrows=1, ncols=3, figsize=(15, 5), sharey=False)
 [
     ax[0].plot(time, np.rad2deg(data[:, coordinate]),
                label=labels[coordinate][2:],)
     for coordinate in coordinates
 ]
+ax[0].plot(time, x, '--', label='desired')
 ax[0].legend()
 ax[0].set_xlabel('time $(s)$')
 ax[0].set_ylabel('coordinates (deg)')
+
 [
     ax[1].plot(time,
                np.rad2deg(data[:, speed]),
                label=labels[speed][2:])
     for speed in speeds
 ]
+ax[1].plot(time, v, '--', label='desired')
 ax[1].legend()
 ax[1].set_xlabel('time (s)')
-ax[1].set_ylabel('speeds (deg / s)')
+ax[1].set_ylabel('velocities (deg / s)')
 
 [
     ax[2].plot(
@@ -139,7 +170,7 @@ ax[1].set_ylabel('speeds (deg / s)')
 ]
 ax[2].legend()
 ax[2].set_xlabel('time $(s)$')
-ax[2].set_ylabel('activations')
+ax[2].set_ylabel('muscle excitations')
 ax[2].set_ylim([0, 1])
 
 fig.tight_layout()
