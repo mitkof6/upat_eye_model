@@ -72,18 +72,35 @@ void FixationController::computeControls(const State& s, Vector& controls) const
                          get_saccade_onset(),
                          thetaH,
                          2 * desSaccadeVelocity / abs(thetaH));
+    // auto sigmY = sigmoid(t,
+    //                      get_saccade_onset(),
+    //                      thetaH,
+    //                      2 * desSaccadeVelocity / abs(thetaH))
+    //   + sigmoid(t - 1,
+    //             get_saccade_onset(),
+    //             -thetaH, 2 * desSaccadeVelocity / abs(thetaH));
 
     double ydes = isnan(sigmY[0]) ? 0 : sigmY[0];
     double ydesv = isnan(sigmY[1]) ? 0 : sigmY[1];
-    double ydesa = sigmY[2];
+    double ydesa = isnan(sigmY[2]) ? 0 : sigmY[2];
 
     auto sigmZ = sigmoid(t,
                          get_saccade_onset(),
                          thetaV,
                          2 * desSaccadeVelocity / abs(thetaV));
+    // auto sigmZ = sigmoid(t,
+    //                      get_saccade_onset(),
+    //                      thetaV - thetaV, 2 * desSaccadeVelocity / abs(thetaV))
+    //   + sigmoid(t - 2,
+    //             get_saccade_onset(),
+    //             thetaV, 2 * desSaccadeVelocity / abs(thetaV))
+    //   + sigmoid(t - 3,
+    //             get_saccade_onset(),
+    //             -thetaV, 2 * desSaccadeVelocity / abs(thetaV));
+
     double zdes = isnan(sigmZ[0]) ? 0 : sigmZ[0];
     double zdesv = isnan(sigmZ[1]) ? 0 : sigmZ[1];
-    double zdesa = sigmZ[2];
+    double zdesa = isnan(sigmZ[2]) ? 0 : sigmZ[2];
 
     // Get the current position and velocity
     double x = xCoord.getValue(s); double xv = xCoord.getSpeedValue(s);

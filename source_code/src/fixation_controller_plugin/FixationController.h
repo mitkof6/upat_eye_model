@@ -5,7 +5,7 @@
  * horizontal and vertical target angle and computes the muscle excitation
  * required to track the desired motion.
  *
- * @author Constantinos Filip <filipconstantinos@gmail.com>
+ * @author Konstantinos Filip <filipconstantinos@gmail.com>
  *         Dimitar Stanev     <jimstanev@gmail.com>
  *
  * @see <a href="https://simtk.org/projects/eye">[SimTK Project]</a>, <a

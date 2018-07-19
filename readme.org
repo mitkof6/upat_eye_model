@@ -1,5 +1,5 @@
 #+TITLE: An Open-Source OpenSim Oculomotor Model for Kinematics and Dynamics Simulation
-#+AUTHOR: Constantinos Filip, Dimitar Stanev, Konstantinos Moustakas
+#+AUTHOR: Konstantinos Filip, Dimitar Stanev, Konstantinos Moustakas
 #+EMAIL: stanev@ece.upatras.gr
 #+OPTIONS: email:t author:t date:nil toc:nil \n:nil num:nil
 #+LATEX_HEADER: \usepackage{fullpage}

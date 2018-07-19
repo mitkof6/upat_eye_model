@@ -6,7 +6,7 @@
  * the model and a forward simulation is carried. All results are stored in the
  * model/ folder.
  *
- * @author Constantinos Filip <filipconstantinos@gmail.com>
+ * @author Konstantinos Filip <filipconstantinos@gmail.com>
  *         Dimitar Stanev     <jimstanev@gmail.com>
  *
  * @see <a href="https://simtk.org/projects/eye">[SimTK Project]</a>, <a
