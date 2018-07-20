@@ -20,13 +20,16 @@ An open-source OpenSim oculomotor. The project is organized as follows:
 * Acknowledge
 
 [1] K. Filip, D. Stanev, and K. Moustakas (2018). An Open-Source OpenSim
-Oculomotor Model for Kinematics and Dynamics Simulation. arXiv: XXX.
+Oculomotor Model for Kinematics and Dynamics Simulation, arXiv:1807.07332
+[physics.bio-ph].
 
 [2] SimTK project: https://simtk.org/projects/eye
 
+#+BEGIN_EXPORT html
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img
 alt="Creative Commons License" style="border-width:0"
 src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is
 licensed under a <a rel="license"
 href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution
 4.0 International License</a>.
+#+END_EXPORT

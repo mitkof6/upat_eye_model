@@ -10,7 +10,7 @@
  *         Dimitar Stanev     <jimstanev@gmail.com>
  *
  * @see <a href="https://simtk.org/projects/eye">[SimTK Project]</a>, <a
- * href="XXX">[Publication]</a>
+ * href="https://arxiv.org/abs/1807.07332">[Publication]</a>
  */
 #include <iostream>
 #include <OpenSim/OpenSim.h>
