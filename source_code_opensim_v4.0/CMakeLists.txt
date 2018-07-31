@@ -78,53 +78,15 @@ set(CMAKE_EXTRA_INCLUDE_FILES)
 
 ################################################################################
 
-# # configure for new version of OpenSim (v4.0)
-# find_package(OpenSim REQUIRED)
-# if(OpenSim_FOUND)
-# message(STATUS "OpenSim found at ${OpenSim_DIR}")
-# include_directories(${OpenSim_INCLUDE_DIRS})
-# link_directories(${OpenSim_LIB_DIR})
-# else()
-# message(FATAL_ERROR "Can't find OpenSim at ${OpenSim_DIR}")
-# endif()
-
-# configure for old version of OpenSim (v3.3)
-if(${CMAKE_HOST_SYSTEM_NAME} MATCHES Windows)
-  set(NameSpace "OpenSim_" CACHE string "Prefix of OpenSim namespace")
+# configure for new version of OpenSim (v4.0)
+find_package(OpenSim REQUIRED)
+if(OpenSim_FOUND)
+    message(STATUS "OpenSim found at ${OpenSim_DIR}")
+    include_directories(${OpenSim_INCLUDE_DIRS})
+    link_directories(${OpenSim_LIB_DIR})
 else()
-  set(NameSpace "" CACHE string "Prefix of OpenSim namespace")
+    message(FATAL_ERROR "Can't find OpenSim at ${OpenSim_DIR}")
 endif()
-set(OPENSIM_HOME $ENV{OPENSIM_HOME} CACHE PATH
-  "Top-level directory of OpenSim install dir")
-set(OpenSim_INCLUDE_DIRS ${OPENSIM_HOME}/sdk/include)
-set(SimTK_INCLUDE_DIRS
-  ${OPENSIM_HOME}/sdk/include/SimTK/include
-  ${OPENSIM_HOME}/sdk/include/SimTK/simbody)
-include_directories(${OpenSim_INCLUDE_DIRS} ${SimTK_INCLUDE_DIRS})
-set(OpenSim_LIB_DIR
-  ${OPENSIM_HOME}/lib
-  ${OPENSIM_HOME}/sdk/lib)
-link_directories(${OpenSim_LIB_DIR})
-if(${CMAKE_HOST_SYSTEM_NAME} MATCHES Windows)
-  if(${PLATFORM_ABI} MATCHES "x64")
-    set(PTHREAD pthreadVC2_x64)
-  else()
-    set(PTHREAD pthreadVC2)
-  endif()
-endif()
-set(OpenSim_LIBRARIES
-  debug osimCommon_d     optimized osimCommon
-  debug osimSimulation_d optimized osimSimulation
-  debug osimAnalyses_d   optimized osimAnalyses
-  debug osimActuators_d  optimized osimActuators
-  debug osimTools_d      optimized osimTools
-  debug     ${NameSpace}SimTKcommon_d
-  optimized ${NameSpace}SimTKcommon
-  debug     ${NameSpace}SimTKmath_d
-  optimized ${NameSpace}SimTKmath
-  debug     ${NameSpace}SimTKsimbody_d
-  optimized ${NameSpace}SimTKsimbody
-  ${PTHREAD})
 
 ################################################################################
 
