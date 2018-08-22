@@ -122,14 +122,23 @@ def smooth(x):
 # state = 'UPAT_Eye_Model_Passive_Pulleys_v3_State_h15v0kv0.sto'
 # state = 'UPAT_Eye_Model_Passive_Pulleys_v3_Statesh0v15kv0.sto'
 # state = 'UPAT_Eye_Model_Passive_Pulleys_v3_Statesh-15v15kv0.sto'
-state = 'UPAT_Eye_Model_Passive_Pulleys_v3_Statesh15v-15kv0002.sto'
+# state = 'UPAT_Eye_Model_Passive_Pulleys_v3_Statesh15v-15kv0002.sto'
+state = 'UPAT_Eye_Model_Passive_Pulleys_v4_States_v4.sto'
 
 header, labels, data = readMotionFile(state)
 
 data = np.array(data)
 time = np.array(data[:, 0])
-coordinates = [1, 2, 3]
-speeds = [7, 8, 9]
+
+# v4 is OpenSim v4.0 compatible thus the state are stored differently from
+# OpenSim v3.3
+if 'v4' in state:  # OpenSim v4.0
+    coordinates = index_containing_substring(labels, 'value')[0:3]
+    speeds = index_containing_substring(labels, 'speed')[0:3]
+else:  # OpenSim v3.3
+    coordinates = [1, 2, 3]
+    speeds = [7, 8, 9]
+
 activations = index_containing_substring(labels, 'activation')
 
 theta = np.ceil(np.rad2deg(np.amax(data[:, coordinates])))
@@ -142,7 +151,7 @@ B = 2 * v / theta
 fig, ax = plt.subplots(nrows=1, ncols=3, figsize=(15, 5), sharey=False)
 [
     ax[0].plot(time, np.rad2deg(data[:, coordinate]),
-               label=labels[coordinate][2:],)
+               label=labels[coordinate])
     for coordinate in coordinates
 ]
 ax[0].plot(time, x, '--', label='desired')
@@ -153,7 +162,7 @@ ax[0].set_ylabel('coordinates (deg)')
 [
     ax[1].plot(time,
                np.rad2deg(data[:, speed]),
-               label=labels[speed][2:])
+               label=labels[speed])
     for speed in speeds
 ]
 ax[1].plot(time, v, '--', label='desired')

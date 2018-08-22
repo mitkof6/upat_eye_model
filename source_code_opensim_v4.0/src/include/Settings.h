@@ -3,6 +3,6 @@
 
 #include <string>
 
-std::string MODEL_DIR = "D:/Desktop/upat_eye_model/source_code_opensim_v4.0/../model/";
+std::string MODEL_DIR = "/home/mitkof6/dev/upat_eye_model/source_code_opensim_v4.0/../model/";
 
 #endif
