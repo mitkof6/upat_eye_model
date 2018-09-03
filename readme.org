@@ -15,7 +15,7 @@ An open-source OpenSim oculomotor. The project is organized as follows:
 - *doc* contains model documentation
 - *model* contains OpenSim .osim model related files
 - *source_code* contains the fixation controller plugin
-- *release* contains OpenSim 3.3 x64 plugin (model v3)
+- *release* contains OpenSim 3.3/4.0 x64 plugin
 
 * Acknowledge
 
